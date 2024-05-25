@@ -16,6 +16,7 @@ CREATE TABLE "purchaseHis_t" (
   "product_id" uuid,
   "product_size" varchar,
   "product_color" varchar,
+  "product_store_id" uuid,
   "count" integer,
   PRIMARY KEY ("user_mail", "id")
 );
@@ -41,9 +42,8 @@ CREATE TABLE "productStore_t" (
 
 CREATE TABLE "cart_t" (
   "user_mail" varchar,
-  "id" uuid,
-  "isdone" bool,
-  PRIMARY KEY ("user_mail", "id")
+  "id" uuid PRIMARY KEY,
+  "isdone" bool
 );
 
 CREATE TABLE "cart_contain_product" (
@@ -120,8 +120,7 @@ CREATE TABLE "course_use_table_t" (
 -- purchaseHis_t
 ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
 ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id");
-ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_size") REFERENCES "productStore_t" ("size");
-ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_color") REFERENCES "productStore_t" ("color");
+ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id", "product_size", "product_color", "product_store_id") REFERENCES "productStore_t" ("product_id", "size", "color", "id");
 
 -- productStore_t
 ALTER TABLE "productStore_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id");
@@ -138,7 +137,7 @@ ALTER TABLE "subuser_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail
 
 -- user_take_course_t
 ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
-ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_name") REFERENCES "subuser_t" ("name");
+ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_mail", "user_name") REFERENCES "subuser_t" ("user_mail", "name");
 ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
 
 -- coachIs_t
@@ -147,12 +146,8 @@ ALTER TABLE "coachIs_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id
 
 -- user_reserve_table_t
 ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
-ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid") REFERENCES "table_t" ("tableid");
-ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("tabledate") REFERENCES "table_t" ("tabledate");
-ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("timeidx") REFERENCES "table_t" ("timeidx");
+ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", "timeidx") REFERENCES "table_t" ("tableid", "tabledate", "timeidx");
 
 -- course_use_table_t
 ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("courseid") REFERENCES "course_t" ("id");
-ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("usedtableid") REFERENCES "table_t" ("tableid");
-ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("tabledate") REFERENCES "table_t" ("tabledate");
-ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("timeidx") REFERENCES "table_t" ("timeidx");
+ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", "timeidx") REFERENCES "table_t" ("tableid", "tabledate", "timeidx");
