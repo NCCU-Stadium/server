@@ -2,16 +2,16 @@ CREATE TABLE "user_t" (
   "mail" varchar PRIMARY KEY,
   "role" varchar,
   "phone" varchar,
-  "created_at" timestamp,
+  "created_at" timestamp with time zone not null default now(),
   "pass" varchar,
-  "point" integer,
-  "unpaid" integer
+  "point" integer not null default 0,
+  "unpaid" integer not null default 0
 );
 
 CREATE TABLE "purchaseHis_t" (
   "user_mail" varchar,
-  "id" uuid,
-  "time" timestamp,
+  "id" uuid not null default uuid_generate_v4(),
+  "time" timestamp with time zone not null default now(),
   "price" integer,
   "product_id" uuid,
   "product_size" varchar,
@@ -22,7 +22,7 @@ CREATE TABLE "purchaseHis_t" (
 );
 
 CREATE TABLE "product_t" (
-  "id" uuid PRIMARY KEY,
+  "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "name" varchar,
   "brand" varchar,
   "price" integer,
@@ -35,14 +35,14 @@ CREATE TABLE "productStore_t" (
   "size" varchar,
   "color" varchar,
   "count" varchar,
-  "id" uuid,
+  "id" uuid not null default uuid_generate_v4(),
   "sold" integer,
   PRIMARY KEY ("product_id", "size", "color", "id")
 );
 
 CREATE TABLE "cart_t" (
   "user_mail" varchar,
-  "id" uuid PRIMARY KEY,
+  "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "isdone" bool
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE "cart_contain_product" (
 );
 
 CREATE TABLE "course_t" (
-  "id" uuid PRIMARY KEY,
+  "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "timeslot" integer,
   "weekday" varchar,
   "coursetype" varchar,
@@ -73,7 +73,7 @@ CREATE TABLE "course_t" (
 CREATE TABLE "subuser_t" (
   "user_mail" varchar,
   "avatar" varchar,
-  "created_at" timestamp,
+  "created_at" timestamp with time zone not null default now(),
   "name" varchar,
   "gender" varchar,
   "birth" date,
