@@ -151,3 +151,19 @@ ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", 
 -- course_use_table_t
 ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("courseid") REFERENCES "course_t" ("id");
 ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", "timeidx") REFERENCES "table_t" ("tableid", "tabledate", "timeidx");
+
+-- Activity table
+create table "activity_t" (
+  "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
+  "title" varchar,
+  "content" varchar,
+  "time" timestamp with time zone not null default now()
+);
+
+-- Announcement table
+create table "announcement_t" (
+  "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
+  "title" varchar,
+  "content" varchar,
+  "time" timestamp with time zone not null default now(),
+);
