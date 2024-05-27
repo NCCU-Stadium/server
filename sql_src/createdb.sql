@@ -13,6 +13,7 @@ CREATE TABLE "purchaseHis_t" (
   "id" uuid not null default uuid_generate_v4(),
   "time" timestamp with time zone not null default now(),
   "price" integer,
+  "product_name" varchar,
   "product_id" uuid,
   "product_size" varchar,
   "product_color" varchar,
@@ -27,14 +28,14 @@ CREATE TABLE "product_t" (
   "brand" varchar,
   "price" integer,
   "desc" varchar,
-  "imgurl" varchar
+  "imgurl" varchar[] not null default array[]
 );
 
 CREATE TABLE "productStore_t" (
   "product_id" uuid,
   "size" varchar,
   "color" varchar,
-  "count" varchar,
+  "count" integer not null default 1,
   "id" uuid not null default uuid_generate_v4(),
   "sold" integer,
   PRIMARY KEY ("product_id", "size", "color", "id")
@@ -123,7 +124,7 @@ ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t
 ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id", "product_size", "product_color", "product_store_id") REFERENCES "productStore_t" ("product_id", "size", "color", "id");
 
 -- productStore_t
-ALTER TABLE "productStore_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id");
+ALTER TABLE "productStore_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id") on delete cascade;
 
 -- cart_t
 ALTER TABLE "cart_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
@@ -165,5 +166,5 @@ create table "announcement_t" (
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "title" varchar,
   "content" varchar,
-  "time" timestamp with time zone not null default now(),
+  "time" timestamp with time zone not null default now()
 );
