@@ -1,11 +1,17 @@
-# /shop routes
+# /shop/product routes
 
 ### procuct
 
 <details>
-<summary><code>POST</code> <code><b>/product/create</b></code> <code>(Create a product)</code></summary>
+<summary><code>POST</code> <code><b>/</b></code> <code>(Create a product)</code></summary>
 
 <br />only for admin
+
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
 
 ##### Body (application/json)
 
@@ -31,19 +37,30 @@
 </details>
 
 <details>
-<summary><code>POST</code> <code><b>/product/addInfo</b></code> <code>(Add information of a specific product)</code></summary>
+<summary><code>POST</code> <code><b>/{product_id}</b></code> <code>(Add information of a specific product)</code></summary>
 
 <br />only for admin
 
-##### Body (application/json)
+##### Headers
 
-> | key        | required | data type | description                 |
-> | ---------- | -------- | --------- | --------------------------- |
-> | product_id | true     | string    | id of the product           |
-> | size       | false    | string    | size of the product         |
-> | color      | false    | string    | color of the product        |
-> | sold       | true     | int       | Number of products sold     |
-> | count      | true     | int       | Number of products in stock |
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Path Parameters
+
+> | key        | required | data type | description       |
+> | ---------- | -------- | --------- | ----------------- |
+> | product_id | true     | string    | id of the product |
+
+##### Body (application/json or application/x-www-form-urlencoded)
+
+> | key   | required | data type | description                 |
+> | ----- | -------- | --------- | --------------------------- |
+> | size  | false    | string    | size of the product         |
+> | color | false    | string    | color of the product        |
+> | sold  | true     | int       | Number of products sold     |
+> | count | true     | int       | Number of products in stock |
 
 ##### Responses
 
@@ -57,11 +74,17 @@
 ---
 
 <details>
-<summary><code>DELETE</code> <code><b>/product/delete</b></code> <code>(Delete a product by given id)</code></summary>
+<summary><code>DELETE</code> <code><b>/{product_id}</b></code> <code>(Delete a product by given id)</code></summary>
 
 <br />only for admin
 
-##### Query Parameters
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Path Parameters
 
 > | key        | required | data type | description       |
 > | ---------- | -------- | --------- | ----------------- |
@@ -77,11 +100,17 @@
 </details>
 
 <details>
-<summary><code>DELETE</code> <code><b>/product/delete-info</b></code> <code>(Delete a product by given id)</code></summary>
+<summary><code>DELETE</code> <code><b>/{product_id}/{product_store_id}</b></code> <code>(Delete a product by given id)</code></summary>
 
 <br />only for admin
 
-##### Body (application/json)
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Path Parameters
 
 > | key        | required | data type | description            |
 > | ---------- | -------- | --------- | ---------------------- |
@@ -100,7 +129,7 @@
 ---
 
 <details>
-<summary><code>GET</code> <code><b>/product/getAll</b></code> <code>(Retrieve all products.)</code></summary>
+<summary><code>GET</code> <code><b>/</b></code> <code>(Retrieve all products.)</code></summary>
 
 ##### Response
 
@@ -123,9 +152,9 @@ type product = {
 </details>
 
 <details>
-<summary><code>GET</code> <code><b>/product/getAllInfo</b></code> <code>(Retrieve a product's all information by its unique identifier.)</code></summary>
+<summary><code>GET</code> <code><b>/{product_id}</b></code> <code>(Retrieve a product's all information by its unique identifier.)</code></summary>
 
-##### Query Parameters
+##### Path Parameters
 
 > | key        | required | data type | description       |
 > | ---------- | -------- | --------- | ----------------- |
@@ -151,44 +180,20 @@ type productInfo = {
 
 </details>
 
-<details>
-<summary><code>GET</code> <code><b>/product/getInfo</b></code> <code>(Retrieve a product's specific information by its unique identifier.)</code></summary>
-
-##### Body (application/json)
-
-> | key        | required | data type | description            |
-> | ---------- | -------- | --------- | ---------------------- |
-> | product_id | true     | string    | id of the product      |
-> | id         | true     | string    | id of the productStore |
-
-##### Response
-
-```typescript
-type productInfo = {
-  product_id: string
-  size: string
-  color: string
-  count: int
-  id: string
-  sold: int
-}
-```
-
-> | http code | content-type       | response                                             |
-> | --------- | ------------------ | ---------------------------------------------------- |
-> | `200`     | `application/json` | `{"message": "Success", "productInfo": productInfo}` |
-> | `500`     | `application/json` | `{"message": "Error retrieving product"}`            |
-
-</details>
-
 ---
 
 <details>
-<summary><code>PATCH</code> <code><b>/product/update</b></code> <code>(update product)</code></summary>
+<summary><code>PATCH</code> <code><b>/{product_id}</b></code> <code>(update product)</code></summary>
 
 <br />only for admin
 
-##### Query Parameters
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Path Parameters
 
 > | key        | required | data type | description       |
 > | ---------- | -------- | --------- | ----------------- |
@@ -210,17 +215,28 @@ type productInfo = {
 </details>
 
 <details>
-<summary><code>PATCH</code> <code><b>/product/updateInfo</b></code> <code>(update information of a specific product)</code></summary>
+<summary><code>PATCH</code> <code><b>/{product_id}/{product_store_id}</b></code> <code>(update information of a specific product)</code></summary>
 
 <br />only for admin
 
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Path Parameters
+
+> | key        | required | data type | description            |
+> | ---------- | -------- | --------- | ---------------------- |
+> | product_id | true     | string    | id of the product      |
+> | id         | true     | string    | id of the productStore |
+
 ##### Body (application/json)
 
-> | key                             | required | data type | description            |
-> | ------------------------------- | -------- | --------- | ---------------------- |
-> | product_id                      | true     | string    | id of the product      |
-> | id                              | true     | string    | id of the productStore |
-> | ...something you want to update | true     |           |                        |
+> | key | required | data type | description |
+> | --- | -------- | --------- | ----------- |
+> | ... | ...      | ...       | ...         |
 
 ##### Response
 
