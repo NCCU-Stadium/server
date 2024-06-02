@@ -69,6 +69,7 @@
 > | `500`     | `application/json` | `{"message": "Error message"}`        |
 
 </details>
+
 <details>
 <summary><code>DELETE</code> <code><b>/{course_id}</b></code> <code>(Delete a course by given id)</code></summary>
 
