@@ -44,10 +44,10 @@
 
 ##### Response
 
-> | http code | content-type       | response                             |
-> | --------- | ------------------ | ------------------------------------ |
-> | `200`     | `application/json` | `{"message": "Leave successfully."}` |
-> | `500`     | `application/json` | `{"message": "Error message"}`       |
+> | http code | content-type       | response                                                   |
+> | --------- | ------------------ | ---------------------------------------------------------- |
+> | `200`     | `application/json` | `{"message": "Leave successfully.", "leaveCount": number}` |
+> | `500`     | `application/json` | `{"message": "Error message"}`                             |
 
 </details>
 <details>
