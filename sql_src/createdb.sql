@@ -28,7 +28,7 @@ CREATE TABLE "product_t" (
   "brand" varchar,
   "price" integer,
   "desc" varchar,
-  "imgurl" varchar[] not null default array[]
+  "imgurl" varchar[] not null default ARRAY[]::varchar[]
 );
 
 CREATE TABLE "productStore_t" (
