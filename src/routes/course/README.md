@@ -123,9 +123,9 @@
 
 ##### Response
 
-> | http code | content-type       | response                                        |
-> | --------- | ------------------ | ----------------------------------------------- |
-> | `200`     | `application/json` | `{"message": "Success", "courseist": course[]}` |
-> | `500`     | `application/json` | `{"message": "Error retrieving product"}`       |
+> | http code | content-type       | response        |
+> | --------- | ------------------ | --------------- |
+> | `200`     | `application/json` | `...`           |
+> | `400` ... | `text/plain`       | `error message` |
 
 </details>
