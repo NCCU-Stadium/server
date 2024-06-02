@@ -1,4 +1,6 @@
-CREATE TABLE "user_t" (
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS "user_t" (
   "mail" varchar PRIMARY KEY,
   "role" varchar,
   "phone" varchar,
@@ -8,7 +10,7 @@ CREATE TABLE "user_t" (
   "unpaid" integer not null default 0
 );
 
-CREATE TABLE "purchaseHis_t" (
+CREATE TABLE IF NOT EXISTS "purchaseHis_t" (
   "user_mail" varchar,
   "id" uuid not null default uuid_generate_v4(),
   "time" timestamp with time zone not null default now(),
@@ -22,7 +24,7 @@ CREATE TABLE "purchaseHis_t" (
   PRIMARY KEY ("user_mail", "id")
 );
 
-CREATE TABLE "product_t" (
+CREATE TABLE IF NOT EXISTS "product_t" (
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "name" varchar,
   "brand" varchar,
@@ -31,7 +33,7 @@ CREATE TABLE "product_t" (
   "imgurl" varchar[] not null default ARRAY[]::varchar[]
 );
 
-CREATE TABLE "productStore_t" (
+CREATE TABLE IF NOT EXISTS "productStore_t" (
   "product_id" uuid,
   "size" varchar,
   "color" varchar,
@@ -41,13 +43,13 @@ CREATE TABLE "productStore_t" (
   PRIMARY KEY ("product_id", "size", "color", "id")
 );
 
-CREATE TABLE "cart_t" (
+CREATE TABLE IF NOT EXISTS "cart_t" (
   "user_mail" varchar,
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "isdone" bool
 );
 
-CREATE TABLE "cart_contain_product" (
+CREATE TABLE IF NOT EXISTS "cart_contain_product" (
   "cart_id" uuid,
   "product_id" uuid,
   "size" varchar,
@@ -56,7 +58,7 @@ CREATE TABLE "cart_contain_product" (
   PRIMARY KEY ("cart_id", "product_id", "size", "color")
 );
 
-CREATE TABLE "course_t" (
+CREATE TABLE IF NOT EXISTS "course_t" (
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "timeslot" integer,
   "weekday" varchar,
@@ -71,7 +73,7 @@ CREATE TABLE "course_t" (
   "fee" integer
 );
 
-CREATE TABLE "subuser_t" (
+CREATE TABLE IF NOT EXISTS "subuser_t" (
   "user_mail" varchar,
   "avatar" varchar,
   "created_at" timestamp with time zone not null default now(),
@@ -81,7 +83,7 @@ CREATE TABLE "subuser_t" (
   PRIMARY KEY ("user_mail", "name")
 );
 
-CREATE TABLE "user_take_course_t" (
+CREATE TABLE IF NOT EXISTS "user_take_course_t" (
   "user_mail" varchar,
   "user_name" varchar,
   "course_id" uuid,
@@ -89,20 +91,20 @@ CREATE TABLE "user_take_course_t" (
   PRIMARY KEY ("user_mail", "user_name", "course_id")
 );
 
-CREATE TABLE "coachIs_t" (
+CREATE TABLE IF NOT EXISTS "coachIs_t" (
   "user_mail" varchar,
   "course_id" uuid,
   PRIMARY KEY ("user_mail", "course_id")
 );
 
-CREATE TABLE "table_t" (
+CREATE TABLE IF NOT EXISTS "table_t" (
   "timeidx" integer,
   "tabledate" date,
   "tableid" integer,
   PRIMARY KEY ("timeidx", "tabledate", "tableid")
 );
 
-CREATE TABLE "user_reserve_table_t" (
+CREATE TABLE IF NOT EXISTS "user_reserve_table_t" (
   "user_mail" varchar,
   "usedtableid" integer,
   "tabledate" date,
@@ -110,7 +112,7 @@ CREATE TABLE "user_reserve_table_t" (
   PRIMARY KEY ("user_mail", "usedtableid", "tabledate", "timeidx")
 );
 
-CREATE TABLE "course_use_table_t" (
+CREATE TABLE IF NOT EXISTS "course_use_table_t" (
   "courseid" uuid,
   "usedtableid" integer,
   "tabledate" date,
@@ -154,7 +156,7 @@ ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("courseid") REFERENCES "course
 ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", "timeidx") REFERENCES "table_t" ("tableid", "tabledate", "timeidx");
 
 -- Activity table
-create table "activity_t" (
+create table IF NOT EXISTS "activity_t" (
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "title" varchar,
   "content" varchar,
@@ -162,7 +164,7 @@ create table "activity_t" (
 );
 
 -- Announcement table
-create table "announcement_t" (
+create table IF NOT EXISTS "announcement_t" (
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
   "title" varchar,
   "content" varchar,
