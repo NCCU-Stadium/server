@@ -39,41 +39,6 @@
 </details>
 
 <details>
-<summary><code>GET</code> <code><b>/</b></code> <code>(List all course)</code></summary>
-
-##### Query Parameters
-
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
-
-##### Responses
-
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
-
-</details>
-<details>
-<summary><code>GET</code> <code><b>/{course_id}</b></code> <code>(Get certain course's information)</code></summary>
-
-##### Path Parameters
-
-> | key       | required | data type | description      |
-> | --------- | -------- | --------- | ---------------- |
-> | course_id | true     | string    | id of the course |
-
-##### Response
-
-> | http code | content-type       | response                                        |
-> | --------- | ------------------ | ----------------------------------------------- |
-> | `200`     | `application/json` | `{"message": "Success", "courseist": course[]}` |
-> | `500`     | `application/json` | `{"message": "Error retrieving product"}`       |
-
-</details>
-
-<details>
 <summary><code>PATCH</code> <code><b>/{course_id}</b></code> <code>(Modify a course)</code></summary>
 
 <br />only for admin
@@ -127,5 +92,40 @@
 > | ------------ | ------------------ | ------------------------------------------- |
 > | `200`        | `application/json` | `{"message": "Delete course successfully"}` |
 > | `400`, `500` | `text/plain`       | N/A                                         |
+
+</details>
+
+<details>
+<summary><code>GET</code> <code><b>/</b></code> <code>(List all course)</code></summary>
+
+##### Query Parameters
+
+> | key | required | data type | description |
+> | --- | -------- | --------- | ----------- |
+> | ... | ...      | ...       | ...         |
+
+##### Responses
+
+> | http code | content-type       | response        |
+> | --------- | ------------------ | --------------- |
+> | `200`     | `application/json` | `...`           |
+> | `400` ... | `text/plain`       | `error message` |
+
+</details>
+<details>
+<summary><code>GET</code> <code><b>/{course_id}</b></code> <code>(Get certain course's information)</code></summary>
+
+##### Path Parameters
+
+> | key       | required | data type | description      |
+> | --------- | -------- | --------- | ---------------- |
+> | course_id | true     | string    | id of the course |
+
+##### Response
+
+> | http code | content-type       | response                                        |
+> | --------- | ------------------ | ----------------------------------------------- |
+> | `200`     | `application/json` | `{"message": "Success", "courseist": course[]}` |
+> | `500`     | `application/json` | `{"message": "Error retrieving product"}`       |
 
 </details>

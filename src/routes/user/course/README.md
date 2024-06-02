@@ -1,7 +1,7 @@
 # /user/course routes
 
 <details>
-<summary><code>POST</code> <code><b>/add</b></code> <code>(user add a course)</code></summary>
+<summary><code>POST</code> <code><b>/add</b></code> <code>(subUser add a course)</code></summary>
 
 ##### Headers
 
@@ -11,9 +11,11 @@
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key       | required | data type | description         |
+> | --------- | -------- | --------- | ------------------- |
+> | course_id | true     | string    | id of the course    |
+> | user_mail | true     | string    | email of the user   |
+> | user_name | true     | string    | name of the subUser |
 
 ##### Responses
 
@@ -24,9 +26,7 @@
 
 </details>
 <details>
-<summary><code>DELETE</code> <code><b>/remove</b></code> <code>(user remove a course)</code></summary>
-
-Remove a product from given cart. (Check if the cart belongs to the user)
+<summary><code>DELETE</code> <code><b>/remove</b></code> <code>(subUser remove a course)</code></summary>
 
 ##### Headers
 
@@ -36,9 +36,11 @@ Remove a product from given cart. (Check if the cart belongs to the user)
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key       | required | data type | description         |
+> | --------- | -------- | --------- | ------------------- |
+> | course_id | true     | string    | id of the course    |
+> | user_mail | true     | string    | email of the user   |
+> | user_name | true     | string    | name of the subUser |
 
 ##### Responses
 
