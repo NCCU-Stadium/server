@@ -1,12 +1,12 @@
 import express from 'express'
 import { jwtProtect } from '../middleware'
-import { NewActivityType, createActivity } from '../../database/activity/post'
-import { updateActivity } from '../../database/activity/patch'
+import { NewActivityType, createActivity } from '../../database/activities/post'
+import { updateActivity } from '../../database/activities/patch'
 import {
   TimeRangeType,
   getActivityList,
   getActivity,
-} from '../../database/activity/get'
+} from '../../database/activities/get'
 
 const router = express.Router()
 

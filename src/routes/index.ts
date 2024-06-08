@@ -1,2 +1,2 @@
 export { default as authRouter } from './auth'
-export { default as activityRouter } from './activity'
+export { default as activitiesRouter } from './activities'

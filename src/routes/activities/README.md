@@ -1,4 +1,4 @@
-# /activity routes
+# /activities routes
 
 ### Activity
 
