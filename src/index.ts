@@ -13,7 +13,9 @@ app.get('/', (_req, res) => {
 })
 
 import { authRouter } from './routes'
+import { activityRouter } from './routes'
 app.use('/auth', authRouter)
+app.use('/activity', activityRouter)
 
 app.listen(8080, () => {
   console.log(`Server is running on port ${port}`)
