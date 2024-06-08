@@ -1,4 +1,4 @@
-# /user/course routes
+# /users/courses routes
 
 <details>
 <summary><code>POST</code> <code><b>/add</b></code> <code>(subUser add a course)</code></summary>
