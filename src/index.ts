@@ -12,8 +12,8 @@ app.get('/', (_req, res) => {
   res.send('Hello TypeScript with Express!')
 })
 
-import { authRouter } from './routes'
-import { activityRouter } from './routes'
+import { authRouter, activityRouter } from './routes'
+
 app.use('/auth', authRouter)
 app.use('/activity', activityRouter)
 

@@ -8,16 +8,16 @@ export type TimeRangeType = {
 export async function getActivityList(time: TimeRangeType) {
   let qstring = 'select * from activity_t where true'
   let params: string[] = []
-  if(time.start) {
-    qstring += " and time >= $1"
+  if (time.start) {
+    qstring += ' and time >= $1'
     params.push(time.start)
-    if(time.end) {
-      qstring += " and time <= $2"
+    if (time.end) {
+      qstring += ' and time <= $2'
       params.push(time.end)
     }
-  } else if(time.end) {
-      qstring += " and time <= $1"
-      params.push(time.end)
+  } else if (time.end) {
+    qstring += ' and time <= $1'
+    params.push(time.end)
   }
   console.log(params)
   const res = await query(qstring, params)
