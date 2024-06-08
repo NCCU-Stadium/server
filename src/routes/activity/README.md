@@ -44,6 +44,7 @@ The user's role should be 'admin' to modify an activity.
 
 > | key     | required | data type | description        |
 > | ------- | -------- | --------- | ------------------ |
+> | id      | true     | string    | Activity's id      |
 > | title   | true     | string    | Activity's title   |
 > | content | true     | string    | Activity's content |
 
