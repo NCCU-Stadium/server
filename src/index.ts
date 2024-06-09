@@ -12,10 +12,11 @@ app.get('/', (_req, res) => {
   res.send('Hello TypeScript with Express!')
 })
 
-import { authRouter, activitiesRouter, usersRouter } from './routes'
+import { authRouter, activitiesRouter, usersRouter,productRouter } from './routes'
 
 app.use('/auth', authRouter)
 app.use('/activities', activitiesRouter)
+app.use('/shop/product', productRouter)
 app.use('/users', usersRouter)
 
 app.listen(8080, () => {
