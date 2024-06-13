@@ -12,3 +12,12 @@ export async function getUser(mail: string) {
     role: res.rows[0].role,
   }
 }
+
+export async function hasSubuser(mail: string, name: string): Promise<boolean> {
+  const qstring = 'select * from subuser_t where user_mail = $1 and name = $2'
+  const res = await query(qstring, [mail, name])
+  if (res.rowCount == 0) {
+    return false
+  }
+  return true
+}
