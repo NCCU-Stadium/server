@@ -18,16 +18,16 @@
 > | title       | true     | string    | title of the course                                           |
 > | timeSlot    | true     | int       | timeSlot of the course                                        |
 > | weekday     | true     | string    | e.g. Monday...                                                |
-> | coursetype  | true     | string    | e.g. group or private                                         |
-> | duration    | true     | int       | e.g. 1.5 hr                                                   |
-> | weeks       | true     | int       | duration of the course in weeks                               |
+> | courseType  | true     | string    | e.g. group or private                                         |
+> | duration    | true     | float     | e.g. 1.5 (hr)                                                 |
+> | weeks       | true     | int       | number of days in a week                                      |
 > | max         | true     | int       | max people number of the course                               |
 > | content     | true     | string    | content of course                                             |
-> | startday    | true     | string    | start date of the course                                      |
+> | startDay    | true     | string    | start date of the course, in format YYYY-MM-DD                |
 > | fee         | true     | int       | course fee                                                    |
-> | timeidx     | true     | int[]     | time index of the course (used for table reservations)        |
-> | usedtableid | true     | int[]     | table number used in the course (used for table reservations) |
-> | coach       | true     | string[]  | email of the coach                                            |
+> | timeIdx     | true     | int[]     | time index of the course (used for table reservations)        |
+> | usedTableId | true     | int[]     | table number used in the course (used for table reservations) |
+> | coachEmail  | true     | string[]  | email of the coach                                            |
 
 ##### Responses
 
