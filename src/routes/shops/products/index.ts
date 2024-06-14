@@ -33,13 +33,16 @@ router.post('/', jwtProtect, async (req, res) => {
       }
     } catch (addInfoErr) {
       console.error(`Error adding product info:`, addInfoErr)
-      return res.status(500).json({ message: 'Error adding product info', error: addInfoErr })
+      return res
+        .status(500)
+        .json({ message: 'Error adding product info', error: addInfoErr })
     }
     res.status(200).json({ message: 'Success', product_id: productId })
-
   } catch (createProductErr) {
     console.error('Error creating product:', createProductErr)
-    res.status(500).json({ message: 'Error creating product', error: createProductErr })
+    res
+      .status(500)
+      .json({ message: 'Error creating product', error: createProductErr })
   }
 })
 
@@ -49,10 +52,11 @@ router.post('/:product_id', jwtProtect, async (req, res) => {
   }
   const { product_id } = req.params
   const { size, color, sold, count } = req.body
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   if (!uuidRegex.test(product_id)) {
     console.error(product_id)
-    return res.status(400).json({ message: 'Invalid product_id format' });
+    return res.status(400).json({ message: 'Invalid product_id format' })
   }
 
   try {

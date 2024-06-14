@@ -13,11 +13,11 @@ export const updateProduct = async (product_id: string, updates: any) => {
   updates = temp
   const fields = Object.keys(updates)
     .map((key, idx) => {
-      if(key=='desc') return `"${key}" = $${idx + 2}`
-      else if(key=='imgurl') return `${key} = ARRAY[$${idx + 2}]`
+      if (key == 'desc') return `"${key}" = $${idx + 2}`
+      else if (key == 'imgurl') return `${key} = ARRAY[$${idx + 2}]`
       else return `${key} = $${idx + 2}`
-    })  
-    .join(', ') 
+    })
+    .join(', ')
   const values = Object.values(updates)
   // console.error(fields)
   await query(`UPDATE product_t SET ${fields} WHERE id = $1`, [
