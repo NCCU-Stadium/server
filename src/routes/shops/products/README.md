@@ -1,4 +1,4 @@
-# /shop/product routes
+# /shops/products routes
 
 ### procuct
 
