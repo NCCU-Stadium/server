@@ -8,7 +8,10 @@ export type NewAnnouncementType = {
 export async function createAnnouncement(newAnnouncement: NewAnnouncementType) {
   const qstring =
     'insert into announcement_t (title, content) values ($1, $2) returning *'
-  const res = await query(qstring, [newAnnouncement.title, newAnnouncement.content])
+  const res = await query(qstring, [
+    newAnnouncement.title,
+    newAnnouncement.content,
+  ])
   if (res.rowCount === 0) {
     return { error: 'announcement not created' }
   }

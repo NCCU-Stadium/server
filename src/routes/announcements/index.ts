@@ -1,6 +1,9 @@
 import express from 'express'
 import { jwtProtect } from '../middleware'
-import { NewAnnouncementType, createAnnouncement } from '../../database/announcements/post'
+import {
+  NewAnnouncementType,
+  createAnnouncement,
+} from '../../database/announcements/post'
 import { updateAnnouncement } from '../../database/announcements/patch'
 import {
   TimeRangeType,
