@@ -77,7 +77,7 @@ e.g.
 > | http code | content-type       | response        |
 > | --------- | ------------------ | --------------- |
 > | `200`     | `application/json` | `userReserve[]` |
-> | `400` ... | `text/plain`       | `error message` |
+> | `400`     | `text/plain`       | `error message` |
 
 </details>
 
