@@ -17,14 +17,12 @@ import {
   activitiesRouter,
   usersRouter,
   productsRouter,
-  cartsRouter
 } from './routes'
 
 app.use('/auth', authRouter)
 app.use('/activities', activitiesRouter)
 app.use('/shops/products', productsRouter)
 app.use('/users', usersRouter)
-app.use('/users/carts', cartsRouter)
 
 app.listen(8080, () => {
   console.log(`Server is running on port ${port}`)

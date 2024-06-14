@@ -1,5 +1,4 @@
 export { default as authRouter } from './auth'
-export { default as cartsRouter } from './user/cart'
 export { default as activitiesRouter } from './activities'
 export { default as usersRouter } from './users'
 export { default as productsRouter } from './shops/products'
