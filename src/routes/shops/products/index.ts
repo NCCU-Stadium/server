@@ -27,12 +27,19 @@ router.post('/', jwtProtect, async (req, res) => {
     req.body
   try {
     const productId = await createProduct(name, brand, price, desc, imgurl)
-    if (size || color || sold || count) {
-      await addProductInfo(productId, size, color, sold, count)
+    try {
+      if (size || color || sold || count) {
+        await addProductInfo(productId, size, color, count, sold)
+      }
+    } catch (addInfoErr) {
+      console.error(`Error adding product info:`, addInfoErr)
+      return res.status(500).json({ message: 'Error adding product info', error: addInfoErr })
     }
     res.status(200).json({ message: 'Success', product_id: productId })
-  } catch (err) {
-    res.status(500).json({ message: err })
+
+  } catch (createProductErr) {
+    console.error('Error creating product:', createProductErr)
+    res.status(500).json({ message: 'Error creating product', error: createProductErr })
   }
 })
 
@@ -42,6 +49,12 @@ router.post('/:product_id', jwtProtect, async (req, res) => {
   }
   const { product_id } = req.params
   const { size, color, sold, count } = req.body
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(product_id)) {
+    console.error(product_id)
+    return res.status(400).json({ message: 'Invalid product_id format' });
+  }
+
   try {
     const productStoreId = await addProductInfo(
       product_id,
@@ -54,6 +67,7 @@ router.post('/:product_id', jwtProtect, async (req, res) => {
       .status(200)
       .json({ message: 'Success', productStore_id: productStoreId })
   } catch (err) {
+    console.error(`Error adding product info:`, err)
     res.status(500).json({ message: err })
   }
 })
@@ -67,6 +81,7 @@ router.delete('/:product_id', jwtProtect, async (req, res) => {
     await deleteProduct(product_id)
     res.status(200).json({ message: 'Delete product successfully' })
   } catch (err) {
+    console.error(`Error deleting product:`, err)
     res.status(500).json({ message: err })
   }
 })
@@ -111,6 +126,7 @@ router.get('/:product_id', async (req, res) => {
     }
     res.status(200).json({ message: 'Success', productInfoList: result.arr })
   } catch (err) {
+    console.error(`Error adding product info:`, err)
     res.status(500).json({ message: 'Error retrieving product' })
   }
 })
@@ -125,6 +141,7 @@ router.patch('/:product_id', jwtProtect, async (req, res) => {
     await updateProduct(product_id, updates)
     res.status(200).json({ message: 'Update successfully.' })
   } catch (err) {
+    console.error('Update error:', updates)
     res.status(500).json({ message: err })
   }
 })
@@ -139,6 +156,7 @@ router.patch('/:product_id/:product_store_id', jwtProtect, async (req, res) => {
     await updateProductInfo(product_id, product_store_id, updates)
     res.status(200).json({ message: 'Update successfully.' })
   } catch (err) {
+    console.error('Update Info error:', err)
     res.status(500).json({ message: err })
   }
 })
