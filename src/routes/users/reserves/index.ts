@@ -12,7 +12,7 @@ import {
 import { cancelReservation } from '../../../database/reserves/delete'
 
 const router = express.Router()
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
   const date = req.query.date as string
   const tableid = req.query.tableid as string
   const timeidx = req.query.timeidx as string
@@ -28,9 +28,8 @@ router.get('/', async (req, res) => {
   return res.status(200).json(result.arr)
 })
 
-router.get('/:mail', async (req, res) => {
-  const mail = req.params.mail
-  console.log(req.params.mail)
+router.get('/', jwtProtect, async (req, res) => {
+  const mail = req.body.decoded.mail
   const result = await getById(mail)
   if (result.error) {
     return res.status(400).send(result.error)
@@ -38,9 +37,8 @@ router.get('/:mail', async (req, res) => {
   return res.status(200).json(result.arr)
 })
 
-router.post('/', async (req, res) => {
-  //const mail = req.body.decoded.mail
-  const mail = req.body.mail
+router.post('/', jwtProtect, async (req, res) => {
+  const mail = req.body.decoded.mail
   const date = req.body.date as string
   const tableid = req.body.tableid as string
   const timeidx = req.body.timeidx as string
@@ -52,8 +50,6 @@ router.post('/', async (req, res) => {
     timeidx: timeidx,
   }
 
-  // const mail = req.params.mail
-  // console.log(req.params.mail)
   const result = await newReservation(reserve)
   if (result.error) {
     return res.status(400).send(result.error)
@@ -66,8 +62,8 @@ router.post('/', async (req, res) => {
   })
 })
 
-router.delete('/', async (req, res) => {
-  const mail = req.body.mail
+router.delete('/', jwtProtect, async (req, res) => {
+  const mail = req.body.decoded.mail
   const date = req.body.date as string
   const tableid = req.body.tableid as string
   const timeidx = req.body.timeidx as string
