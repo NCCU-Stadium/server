@@ -14,7 +14,6 @@
 > | key       | required | data type | description         |
 > | --------- | -------- | --------- | ------------------- |
 > | course_id | true     | string    | id of the course    |
-> | user_mail | true     | string    | email of the user   |
 > | user_name | true     | string    | name of the subUser |
 
 ##### Responses
@@ -39,7 +38,6 @@
 > | key       | required | data type | description         |
 > | --------- | -------- | --------- | ------------------- |
 > | course_id | true     | string    | id of the course    |
-> | user_mail | true     | string    | email of the user   |
 > | user_name | true     | string    | name of the subUser |
 
 ##### Response
@@ -64,7 +62,6 @@
 > | key       | required | data type | description         |
 > | --------- | -------- | --------- | ------------------- |
 > | course_id | true     | string    | id of the course    |
-> | user_mail | true     | string    | email of the user   |
 > | user_name | true     | string    | name of the subUser |
 
 ##### Responses
