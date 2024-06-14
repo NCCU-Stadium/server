@@ -15,9 +15,9 @@ Add a new cart for given user.
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key   | required | data type | description |
+> | ----- | -------- | --------- | ----------- |
+> | `...` | `...`    | `...`     | ` ...`      |
 
 ##### Responses
 
@@ -67,9 +67,13 @@ Add a new product for given cart. (Check if the cart belongs to the user)
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key        | required | data type | description          |
+> | ---------- | -------- | --------- | -------------------- |
+> | cart_id    | true     | string    | id of the cart       |
+> | product_id | true     | string    | id of the product    |
+> | color      | true     | string    | color of the product |
+> | size       | true     | string    | size of the product  |
+> | count      | true     | string    | count of the product |
 
 ##### Responses
 
@@ -93,9 +97,13 @@ Remove a product from given cart. (Check if the cart belongs to the user)
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key        | required | data type | description          |
+> | ---------- | -------- | --------- | -------------------- |
+> | cart_id    | true     | string    | id of the cart       |
+> | product_id | true     | string    | id of the product    |
+> | color      | true     | string    | color of the product |
+> | size       | true     | string    | size of the product  |
+> | count      | true     | string    | count of the product |
 
 ##### Responses
 
@@ -145,9 +153,9 @@ Remove a product from given cart. (Check if the cart belongs to the user)
 
 ##### Query Parameters
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key     | required | data type | description    |
+> | ------- | -------- | --------- | -------------- |
+> | cart_id | true     | string    | id of the cart |
 
 ##### Responses
 

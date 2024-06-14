@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "format": "prettier . --write"
   },
   "keywords": [],
   "author": "GINTOAHC",
@@ -29,6 +30,7 @@
     "@types/pg": "^8.11.6",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.1",
+    "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   }
 }
