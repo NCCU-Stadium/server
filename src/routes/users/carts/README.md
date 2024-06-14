@@ -1,4 +1,4 @@
-# /user/cart routes
+# /users/carts routes
 
 ### Create/Remove a cart or add/remove product from cart
 
