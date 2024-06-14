@@ -1,4 +1,4 @@
-# /announcement routes
+# /announcements routes
 
 ### Announcement
 
@@ -22,10 +22,11 @@ The user's role should be 'admin' to create new announcement.
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code    | content-type       | response            |
+> | ------------ | ------------------ | ------------------- |
+> | `200`        | `application/json` | `...`               |
+> | `400`, `500` | `text/plain`       | `error message`     |
+> | `403`        | `text/plain`       | `permission denied` |
 
 </details>
 
@@ -44,15 +45,17 @@ The user's role should be 'admin' to modify an announcement.
 
 > | key     | required | data type | description            |
 > | ------- | -------- | --------- | ---------------------- |
+> | id      | true     | string    | Announcement's id      |
 > | title   | true     | string    | Announcement's title   |
 > | content | true     | string    | Announcement's content |
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code    | content-type       | response            |
+> | ------------ | ------------------ | ------------------- |
+> | `200`        | `application/json` | `...`               |
+> | `400`, `500` | `text/plain`       | `error message`     |
+> | `403`        | `text/plain`       | `permission denied` |
 
 </details>
 
