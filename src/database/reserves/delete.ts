@@ -64,7 +64,7 @@ export async function cancelReservation(table: ReservationType) {
     await query('COMMIT', [])
 
     return {
-      message: 'Reservation cancelled successfully',
+      message: 'Cancelled successfully',
       cancelled: {
         user_mail: deleteUserReserveRes.rows[0].user_mail,
         usedtableid: deleteUserReserveRes.rows[0].usedtableid,

@@ -61,11 +61,12 @@ export async function newReservation(reserve: ReservationType) {
 
   // 返回成功插入的记录
   return {
-    user_mail: userReserveRes.rows[0].user_mail,
-    usedtableid: userReserveRes.rows[0].usedtableid,
-    tabledate: userReserveRes.rows[0].tabledate,
-    timeidx: userReserveRes.rows[0].timeidx,
+    message: 'reserved successfully',
+    reserve: {
+      user_mail: userReserveRes.rows[0].user_mail,
+      usedtableid: userReserveRes.rows[0].usedtableid,
+      tabledate: userReserveRes.rows[0].tabledate,
+      timeidx: userReserveRes.rows[0].timeidx,
+    },
   }
 }
-
-

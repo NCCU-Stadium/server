@@ -54,12 +54,7 @@ router.post('/', jwtProtect, async (req, res) => {
   if (result.error) {
     return res.status(400).send(result.error)
   }
-  return res.status(200).json({
-    user_mail: result.user_mail,
-    usedtableid: result.usedtableid,
-    tabledate: result.tabledate,
-    timeidx: result.timeidx,
-  })
+  return res.status(200).send(result)
 })
 
 router.delete('/', jwtProtect, async (req, res) => {
@@ -81,11 +76,6 @@ router.delete('/', jwtProtect, async (req, res) => {
   if (result.error) {
     return res.status(400).send(result.error)
   }
-  return res.status(200).json({
-    user_mail: result.cancelled?.user_mail,
-    usedtableid: result.cancelled?.usedtableid,
-    tabledate: result.cancelled?.tabledate,
-    timeidx: result.cancelled?.timeidx,
-  })
+  return res.status(200).send(result)
 })
 export default router
