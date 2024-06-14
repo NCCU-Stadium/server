@@ -11,13 +11,13 @@ export async function leaveUserCourse(subUser: SubUserType, course: string) {
   `
   const res = await query(qstring, [mail, name, course])
   if (res.rowCount === 0) {
-    return { error: "fail to leave" }
+    return { error: 'fail to leave' }
   }
-  
+
   return {
     mail: res.rows[0].title,
     name: res.rows[0].content,
     course_id: res.rows[0].course_id,
-    leave_count: res.rows[0].leave_count
+    leave_count: res.rows[0].leave_count,
   }
 }

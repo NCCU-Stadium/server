@@ -13,11 +13,11 @@ export async function addUserCourse(subUser: SubUserType, course: string) {
     values ($1, $2, $3, 0) returning *
   `
   const res = await query(qstring, [mail, name, course])
-  
+
   return {
     mail: res.rows[0].title,
     name: res.rows[0].content,
     course_id: res.rows[0].course_id,
-    leave_count: res.rows[0].leave_count
+    leave_count: res.rows[0].leave_count,
   }
 }

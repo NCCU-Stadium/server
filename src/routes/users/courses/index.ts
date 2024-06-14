@@ -17,7 +17,7 @@ router.post('/add', jwtProtect, subuserCheck, async (req, res) => {
     res.status(200).json(result)
   } catch (error) {
     console.log(error) // Repeated add, bad parameter were possible
-    res.status(400).send("bad request")
+    res.status(400).send('bad request')
   }
 })
 
@@ -26,12 +26,12 @@ router.patch('/leave', jwtProtect, subuserCheck, async (req, res) => {
   const { mail } = req.body.decoded
   const subUser: SubUserType = { mail, name: user_name }
   const result = await leaveUserCourse(subUser, course_id)
-  if (result.error) {  
+  if (result.error) {
     return res.status(500).json({ message: result.error })
   }
   res.status(200).json({
-    message: "Leave successfully.",
-    leaveCount: result.leave_count
+    message: 'Leave successfully.',
+    leaveCount: result.leave_count,
   })
 })
 
@@ -44,7 +44,7 @@ router.delete('/remove', jwtProtect, subuserCheck, async (req, res) => {
     return res.status(200).json(result)
   } catch (error) {
     console.log(error) // nerver added, or bad parameter were possible
-    res.status(400).send("bad request")
+    res.status(400).send('bad request')
   }
 })
 

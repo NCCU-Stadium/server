@@ -18,13 +18,11 @@ router.post('/', jwtProtect, async (req, res) => {
   if (result.error) {
     res.status(400).send(result.error)
   }
-  return res
-    .status(200)
-    .json({
-      user_mail: result.user_mail,
-      isdone: result.isdone,
-      cart_id: result.id,
-    })
+  return res.status(200).json({
+    user_mail: result.user_mail,
+    isdone: result.isdone,
+    cart_id: result.id,
+  })
 })
 
 router.post('/add', jwtProtect, async (req, res) => {
@@ -49,15 +47,13 @@ router.post('/add', jwtProtect, async (req, res) => {
   if (result.error) {
     res.status(400).send(result.error)
   }
-  return res
-    .status(200)
-    .json({
-      cart_id: result.cart_id,
-      product_id: result.product_id,
-      size: result.size,
-      color: result.color,
-      count: result.count,
-    })
+  return res.status(200).json({
+    cart_id: result.cart_id,
+    product_id: result.product_id,
+    size: result.size,
+    color: result.color,
+    count: result.count,
+  })
 })
 
 router.get('/list', jwtProtect, async (req, res) => {
