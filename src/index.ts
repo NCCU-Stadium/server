@@ -12,9 +12,19 @@ app.get('/', (_req, res) => {
   res.send('Hello TypeScript with Express!')
 })
 
-import { authRouter,  cartsRouter} from './routes'
+import {
+  authRouter,
+  activitiesRouter,
+  usersRouter,
+  productsRouter,
+  cartsRouter
+} from './routes'
+
 app.use('/auth', authRouter)
-app.use('/user/cart', cartsRouter)
+app.use('/activities', activitiesRouter)
+app.use('/shops/products', productsRouter)
+app.use('/users', usersRouter)
+app.use('/users/carts', cartsRouter)
 
 app.listen(8080, () => {
   console.log(`Server is running on port ${port}`)

@@ -1,4 +1,4 @@
-# /course routes
+# /courses routes
 
 <details>
 <summary><code>POST</code> <code><b>/</b></code> <code>(Create a course)</code></summary>

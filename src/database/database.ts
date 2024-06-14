@@ -13,7 +13,7 @@ const pool = new Pool({
   connectionString: env.DATABASE_URL,
 })
 
-export async function query(text: string, params: string[]) {
+export async function query(text: string, params: any[]) {
   const start = Date.now()
   console.log('executing query', { text })
   const res = await pool.query(text, params)

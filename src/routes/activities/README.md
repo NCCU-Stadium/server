@@ -1,4 +1,4 @@
-# /activity routes
+# /activities routes
 
 ### Activity
 
@@ -22,10 +22,11 @@ The user's role should be 'admin' to create new activity.
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code    | content-type       | response            |
+> | ------------ | ------------------ | ------------------- |
+> | `200`        | `application/json` | `...`               |
+> | `400`, `500` | `text/plain`       | `error message`     |
+> | `403`        | `text/plain`       | `permission denied` |
 
 </details>
 
@@ -44,15 +45,17 @@ The user's role should be 'admin' to modify an activity.
 
 > | key     | required | data type | description        |
 > | ------- | -------- | --------- | ------------------ |
+> | id      | true     | string    | Activity's id      |
 > | title   | true     | string    | Activity's title   |
 > | content | true     | string    | Activity's content |
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code    | content-type       | response            |
+> | ------------ | ------------------ | ------------------- |
+> | `200`        | `application/json` | `...`               |
+> | `400`, `500` | `text/plain`       | `error message`     |
+> | `403`        | `text/plain`       | `permission denied` |
 
 </details>
 
