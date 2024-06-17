@@ -1,10 +1,13 @@
 import express from 'express'
 import { jwtProtect } from '../../middleware'
 import { subuserCheck } from '../middleware'
-import { SubUserType, addUserCourse } from '../../../database/user/courses/post'
-import { leaveUserCourse } from '../../../database/user/courses/patch'
-import { removeUserCourse } from '../../../database/user/courses/delete'
-import { getUserCourses } from '../../../database/user/courses/get'
+import {
+  SubUserType,
+  addUserCourse,
+} from '../../../database/users/courses/post'
+import { leaveUserCourse } from '../../../database/users/courses/patch'
+import { removeUserCourse } from '../../../database/users/courses/delete'
+import { getUserCourses } from '../../../database/users/courses/get'
 
 const router = express.Router()
 
