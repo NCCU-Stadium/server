@@ -4,10 +4,10 @@ import {
   addProduct2CartType,
   createCart,
   addProduct2Cart,
-} from '../../../database/cart/post'
-import { deleteCart, deleteProduct } from '../../../database/cart/delete'
-import { getAllCarts, getAllProducts } from '../../../database/cart/get'
-import { verify_cart } from '../../../database/cart/util'
+} from '../../../database/carts/post'
+import { deleteCart, deleteProduct } from '../../../database/carts/delete'
+import { getAllCarts, getAllProducts } from '../../../database/carts/get'
+import { verify_cart } from '../../../database/carts/util'
 
 const router = express.Router()
 
