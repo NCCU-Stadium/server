@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS "course_use_table_t" (
 
 -- purchaseHis_t
 ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
-ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id");
-ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id", "product_size", "product_color", "product_store_id") REFERENCES "productStore_t" ("product_id", "size", "color", "id");
+-- ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id");
+-- ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id", "product_size", "product_color", "product_store_id") REFERENCES "productStore_t" ("product_id", "size", "color", "id");
 
 -- productStore_t
 ALTER TABLE "productStore_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id") on delete cascade;
