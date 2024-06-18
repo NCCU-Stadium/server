@@ -1,23 +1,30 @@
-import { UUID } from 'crypto';
-import { query } from '../database';
+import { UUID } from 'crypto'
+import { query } from '../database'
 
 export type NewCourseType = {
-  title: string,
-  timeSlot: number,
-  weekday: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday',
-  courseType: 'group' | 'private',
-  duration: number,
-  weeks: number,
-  max: number,
-  content: string,
-  startDay: Date,
-  fee: number,
-  timeIdx: number[],
-};
+  title: string
+  timeSlot: number
+  weekday:
+    | 'Monday'
+    | 'Tuesday'
+    | 'Wednesday'
+    | 'Thursday'
+    | 'Friday'
+    | 'Saturday'
+    | 'Sunday'
+  courseType: 'group' | 'private'
+  duration: number
+  weeks: number
+  max: number
+  content: string
+  startDay: Date
+  fee: number
+  timeIdx: number[]
+}
 
 export async function createCourse(newcourse: NewCourseType) {
   const qstring =
-    'insert into "course_t" (title, timeslot, weekday, coursetype, duration, weeks, max, content, startday, fee, timeidx) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::integer[]) returning *';
+    'insert into "course_t" (title, timeslot, weekday, coursetype, duration, weeks, max, content, startday, fee, timeidx) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::integer[]) returning *'
   const res = await query(qstring, [
     newcourse.title,
     newcourse.timeSlot,
@@ -30,9 +37,9 @@ export async function createCourse(newcourse: NewCourseType) {
     newcourse.startDay,
     newcourse.fee,
     newcourse.timeIdx,
-  ]);
+  ])
   if (res.rowCount === 0) {
-    return { error: 'course not created' };
+    return { error: 'course not created' }
   }
   return {
     id: res.rows[0].id,
@@ -47,5 +54,5 @@ export async function createCourse(newcourse: NewCourseType) {
     startDay: res.rows[0].startday,
     fee: res.rows[0].fee,
     timeIdx: res.rows[0].timeidx,
-  } as { id: UUID } & NewCourseType;
+  } as { id: UUID } & NewCourseType
 }

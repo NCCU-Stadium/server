@@ -15,11 +15,11 @@ const pool = new Pool({
 
 export async function query<
   R extends QueryResultRow = any,
-  I extends any[] | undefined = any[]
+  I extends any[] | undefined = any[],
 >(text: string, params: I) {
   const start = Date.now()
   console.log('executing query', { text })
-  const res = await pool.query<R>(text, params);
+  const res = await pool.query<R>(text, params)
   const duration = Date.now() - start
   console.log('executed query', { text, duration, rows: res.rowCount })
   return res

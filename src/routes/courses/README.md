@@ -31,13 +31,13 @@
 
 ##### Responses
 
-> | http code           | content-type       | response                                                            |
-> | ------------------- | ------------------ | ------------------------------------------------------------------- |
-> | `200`               | `application/json` | `{"message": "Success", "course_id": "ObjectId of the new course"}` |
-> | `401`               | `text/plain`       | `"No token provided"` or `TokenExpiredError` or ...                 |
-> | `403`               | `text/plain`       | `Invalid token`                                                     |
-> | `403`               | `application/json` | `{"message": "Not authorized to create courses"}`                   |
-> | `500`               | `application/json` | `{"message": "Error message"}`                                      |
+> | http code | content-type       | response                                                            |
+> | --------- | ------------------ | ------------------------------------------------------------------- |
+> | `200`     | `application/json` | `{"message": "Success", "course_id": "ObjectId of the new course"}` |
+> | `401`     | `text/plain`       | `"No token provided"` or `TokenExpiredError` or ...                 |
+> | `403`     | `text/plain`       | `Invalid token`                                                     |
+> | `403`     | `application/json` | `{"message": "Not authorized to create courses"}`                   |
+> | `500`     | `application/json` | `{"message": "Error message"}`                                      |
 
 </details>
 
