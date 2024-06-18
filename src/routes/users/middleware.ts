@@ -1,5 +1,5 @@
 import express from 'express'
-import { hasSubuser } from '../../database/user/get'
+import { hasSubuser } from '../../database/users/get'
 
 export async function subuserCheck(
   req: express.Request,

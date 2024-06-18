@@ -1,8 +1,8 @@
 import express from 'express'
 import { encryptPassword, comparePassword, generateJWT } from './util'
-import { createUser } from '../../database/user/post'
-import type { NewUserType } from '../../database/user/post'
-import { getUser } from '../../database/user/get'
+import { createUser } from '../../database/users/post'
+import type { NewUserType } from '../../database/users/post'
+import { getUser } from '../../database/users/get'
 
 const router = express.Router()
 
