@@ -1,7 +1,31 @@
 export class BodyVerificationError extends Error { }
 
-export function checkBody(body: any, allRequired: boolean) {
-  if (typeof body !== 'object') {
+interface BodyRequiredRaw {
+  title: string;
+  timeSlot: number;
+  weekday: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+  courseType: 'group' | 'private';
+  duration: number;
+  weeks: number;
+  max: number;
+  content: string;
+  startDay: string;
+  fee: number;
+  timeIdx: number[];
+  usedTableId: number[];
+  coachEmail: string[];
+}
+
+type BodyOptionalRaw = Partial<BodyRequiredRaw>;
+
+type BodyRequired = Omit<BodyRequiredRaw, "startDay"> & { startDay: Date };
+
+type BodyOptional = Omit<BodyOptionalRaw, "startDay"> & { startDay?: Date };
+
+export function checkBody<T extends BodyRequiredRaw>(body: T, allRequired: true): BodyRequired;
+export function checkBody<T extends BodyOptionalRaw>(body: T, allRequired: false): BodyOptional;
+export function checkBody<T extends BodyOptionalRaw | BodyRequiredRaw>(body: T, allRequired: boolean) {
+  if (typeof body !== 'object' || body === null) {
     throw new BodyVerificationError('body must be an object');
   }
   if ((allRequired || body.title !== undefined) &&
@@ -15,12 +39,12 @@ export function checkBody(body: any, allRequired: boolean) {
     throw new BodyVerificationError('timeSlot must be an integer');
   }
   if ((allRequired || body.weekday !== undefined) &&
-    (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].indexOf(body.weekday) === -1)
+    (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].indexOf(body.weekday as string) === -1)
   ) {
     throw new BodyVerificationError('weekday must be one of Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday');
   }
   if ((allRequired || body.courseType !== undefined) &&
-    (['group', 'private'].indexOf(body.courseType) === -1)
+    (['group', 'private'].indexOf(body.courseType as string) === -1)
   ) {
     throw new BodyVerificationError('courseType must be a string');
   }
@@ -48,6 +72,9 @@ export function checkBody(body: any, allRequired: boolean) {
     (typeof body.startDay !== 'string' || body.startDay.length === 0 || /^\d{4}-\d{2}-\d{2}$/.test(body.startDay) === false)
   ) {
     throw new BodyVerificationError('startDay must be a non-empty string in the format YYYY-MM-DD');
+  } else if (body.startDay !== undefined) {
+    // @ts-ignore
+    body.startDay = new Date(body.startDay);
   }
   if ((allRequired || body.fee !== undefined) &&
     (typeof body.fee !== 'number' || !Number.isInteger(body.fee) || body.fee < 0)
@@ -72,4 +99,5 @@ export function checkBody(body: any, allRequired: boolean) {
   ) {
     throw new BodyVerificationError('coachEmail must be an array of strings');
   }
+  return body;
 }
