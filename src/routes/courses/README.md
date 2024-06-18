@@ -20,7 +20,7 @@
 > | weekday     | true     | string    | e.g. Monday...                                                |
 > | courseType  | true     | string    | e.g. group or private                                         |
 > | duration    | true     | float     | e.g. 1.5 (hr)                                                 |
-> | weeks       | true     | int       | number of days in a week                                      |
+> | weeks       | true     | int       | duration of the course in weeks                               |
 > | max         | true     | int       | max people number of the course                               |
 > | content     | true     | string    | content of course                                             |
 > | startDay    | true     | string    | start date of the course, in format YYYY-MM-DD                |
