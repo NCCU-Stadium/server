@@ -101,3 +101,24 @@ export function checkBody<T extends BodyOptionalRaw | BodyRequiredRaw>(body: T, 
   }
   return body;
 }
+
+export function weekday2num(weekday: string): number {
+  switch (weekday) {
+    case "Monday":
+      return 1;
+    case "Tuesday":
+      return 2;
+    case "Wednesday":
+      return 3;
+    case "Thursday":
+      return 4;
+    case "Friday":
+      return 5;
+    case "Saturday":
+      return 6;
+    case "Sunday":
+      return 7;
+    default:
+      throw new Error("Invalid weekday");
+  }
+}

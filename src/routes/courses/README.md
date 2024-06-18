@@ -27,14 +27,17 @@
 > | fee         | true     | int       | course fee                                                    |
 > | timeIdx     | true     | int[]     | time index of the course (used for table reservations)        |
 > | usedTableId | true     | int[]     | table number used in the course (used for table reservations) |
-> | coachEmail  | true     | string[]  | email of the coach                                            |
+> | coachEmail  | true     | string[]  | email of the coaches                                          |
 
 ##### Responses
 
 > | http code           | content-type       | response                                                            |
 > | ------------------- | ------------------ | ------------------------------------------------------------------- |
 > | `200`               | `application/json` | `{"message": "Success", "course_id": "ObjectId of the new course"}` |
-> | `401`, `400`, `500` | `text/plain`       | N/A                                                                 |
+> | `401`               | `text/plain`       | `"No token provided"` or `TokenExpiredError` or ...                 |
+> | `403`               | `text/plain`       | `Invalid token`                                                     |
+> | `403`               | `application/json` | `{"message": "Not authorized to create courses"}`                   |
+> | `500`               | `application/json` | `{"message": "Error message"}`                                      |
 
 </details>
 
