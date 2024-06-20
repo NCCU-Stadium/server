@@ -109,7 +109,6 @@
 > | http code | content-type       | response                                                                                                                    |
 > | --------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
 > | `200`     | `application/json` | `all course information in an array, whose item is a course and the same as create course, except that id is also included` |
-> | `400` ... | `text/plain`       | `error message`                                                                                                             |
 
 </details>
 <details>
@@ -123,9 +122,9 @@
 
 ##### Response
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                 |
+> | --------- | ------------------ | ------------------------------------------------------------------------ |
+> | `200`     | `application/json` | `course info, as same as create course, except that id is also included` |
+> | `400` ... | `application/json` | `{ message: "error message" }`                                           |
 
 </details>

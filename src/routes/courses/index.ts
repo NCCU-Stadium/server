@@ -1,3 +1,4 @@
+import { UUID } from 'crypto'
 import express from 'express'
 import { jwtProtect } from '../middleware'
 import { BodyVerificationError, checkBody, weekday2num } from './util'
@@ -77,6 +78,23 @@ router.post('/', jwtProtect, async (req, res) => {
 
 router.get('/', async (req, res) => {
   return res.status(200).json(await getCourse())
+})
+
+router.get('/:course_id', async (req, res) => {
+  const courseId = req.params.course_id
+  if (
+    !courseId ||
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(
+      courseId
+    ) === false
+  ) {
+    return res.status(400).json({ message: 'course id must be a UUID' })
+  }
+  const course = await getCourse(courseId as UUID)
+  if ('error' in course) {
+    return res.status(400).json({ message: course.error })
+  }
+  return res.status(200).json(course)
 })
 
 export default router
