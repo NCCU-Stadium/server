@@ -77,7 +77,20 @@ router.post('/', jwtProtect, async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-  return res.status(200).json(await getCourse())
+  const courses = await getCourse()
+  return res.status(200).json(
+    courses.map((course) => ({
+      ...course,
+      startDay: course.startDay
+        .toLocaleDateString('zh-TW', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })
+        .split('/')
+        .join('-'),
+    }))
+  )
 })
 
 router.get('/:course_id', async (req, res) => {
@@ -94,7 +107,17 @@ router.get('/:course_id', async (req, res) => {
   if ('error' in course) {
     return res.status(400).json({ message: course.error })
   }
-  return res.status(200).json(course)
+  return res.status(200).json({
+    ...course,
+    startDay: course.startDay
+      .toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('/')
+      .join('-'),
+  })
 })
 
 export default router
