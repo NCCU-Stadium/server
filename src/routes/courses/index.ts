@@ -1,6 +1,6 @@
 import express from 'express'
 import { jwtProtect } from '../middleware'
-import { checkBody, weekday2num } from './util'
+import { BodyVerificationError, checkBody, weekday2num } from './util'
 import { createCourse } from '../../database/courses/post'
 import { createCourseUseTable } from '../../database/course_use_table/post'
 import { createCoachIs } from '../../database/coachIs/post'
@@ -11,6 +11,7 @@ router.post('/', jwtProtect, async (req, res) => {
   if (req.body.decoded.role !== 'admin') {
     return res.status(403).json({ message: 'Not authorized to create courses' })
   }
+  try {
   const body = checkBody(req.body, true)
   if (weekday2num(body.weekday) !== body.startDay.getDay()) {
     return res
@@ -64,6 +65,14 @@ router.post('/', jwtProtect, async (req, res) => {
     message: 'Success',
     course_id: newCourse.id,
   })
+  } catch (e) {
+    if (e instanceof BodyVerificationError) {
+      return res.status(400).json({ message: e.message })
+    }
+    console.error(e)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+})
 })
 
 export default router
