@@ -60,18 +60,25 @@ router.get('/list', jwtProtect, async (req, res) => {
   const user_mail = req.body.decoded.mail
 
   const result = await getAllCarts(user_mail)
-  if (result.error) {
-    return res.status(400).send(result.error)
+  // if (result.error) {
+  //   return res.status(400).send(result.error)
+  // }
+  if (result.message) {
+    return res.status(200).json({
+      Carts_List: [],
+      message: result.message, // 返回 message 字段
+    })
   }
 
-  res.status(200).json({
+  return res.status(200).json({
     Carts_List: result.arr,
   })
 })
 
 router.get('/list-cart', jwtProtect, async (req, res) => {
-  const { cart_id } = req.body
+  const cart_id = req.query.cart_id as string
   const user_mail = req.body.decoded.mail
+  console.log(user_mail)
 
   const test = await verify_cart(user_mail, cart_id)
 
@@ -80,9 +87,16 @@ router.get('/list-cart', jwtProtect, async (req, res) => {
   }
 
   const result = await getAllProducts(cart_id)
-  if (result.error) {
-    return res.status(400).send(result.error)
+  // if (result.error) {
+  //   return res.status(400).send(result.error)
+  // }
+  if (result.message) {
+    return res.status(200).json({
+      Carts_List: [],
+      message: result.message, // 返回 message 字段
+    })
   }
+
   res.status(200).json({
     Products_in_Cart_List: result.arr,
   })

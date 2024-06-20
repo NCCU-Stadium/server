@@ -5,7 +5,8 @@ export async function getAllCarts(user_mail: string) {
   const res = await query(qstring, [user_mail])
 
   if (res.rowCount === 0) {
-    return { error: 'user_mail not found' }
+    return { message: 'user does not have cart' }
+    // return { error: 'user_mail not found' }
   }
   /*return {
         id: res.rows[0].id,
@@ -20,7 +21,8 @@ export async function getAllProducts(cart_id: string) {
   const res = await query(qstring, [cart_id])
 
   if (res.rowCount === 0) {
-    return { error: 'cart_id not found' }
+    return { message: 'cart is empty' } 
+    /* return { error: 'cart_id not found' } */
   }
   /*return {
         product_id: res.rows[0].product_id,
