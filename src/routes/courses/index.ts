@@ -3,6 +3,7 @@ import express from 'express'
 import { jwtProtect } from '../middleware'
 import { BodyVerificationError, checkBody, weekday2num } from './util'
 import { createCourse } from '../../database/courses/post'
+import { createNewTable } from '../../database/table/post'
 import { createCourseUseTable } from '../../database/course_use_table/post'
 import { createCoachIs } from '../../database/coachIs/post'
 import { getCourse } from '../../database/courses/get'
@@ -36,15 +37,24 @@ router.post('/', jwtProtect, async (req, res) => {
       )
       body.timeIdx.forEach((timeIdx) => {
         body.usedTableId.forEach(async (usedTableId) => {
-          const newTable = await createCourseUseTable({
+          try {
+            await createNewTable({
+              timeIdx,
+              tableDate: dateThisWeek,
+              tableId: usedTableId,
+            })
+          } catch (e) {
+            return res.status(400).json({ message: 'Table already reserved' })
+          }
+          const newTableUse = await createCourseUseTable({
             courseId: newCourse.id,
             usedTableId,
             tableDate: dateThisWeek,
             timeIdx,
           })
-          if ('error' in newTable) {
-            console.error(newTable.error)
-            return res.status(500).json({ message: newTable.error })
+          if ('error' in newTableUse) {
+            console.error(newTableUse.error)
+            return res.status(500).json({ message: newTableUse.error })
           }
         })
       })
