@@ -104,18 +104,12 @@
 <details>
 <summary><code>GET</code> <code><b>/</b></code> <code>(List all course)</code></summary>
 
-##### Query Parameters
-
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
-
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                                                                    |
+> | --------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+> | `200`     | `application/json` | `all course information in an array, whose item is a course and the same as create course, except that id is also included` |
+> | `400` ... | `text/plain`       | `error message`                                                                                                             |
 
 </details>
 <details>
