@@ -19,7 +19,7 @@
 > | timeSlot    | true     | int       | timeSlot of the course                                        |
 > | weekday     | true     | string    | e.g. Monday...                                                |
 > | courseType  | true     | string    | e.g. group or private                                         |
-> | duration    | true     | float     | e.g. 1.5 (hr)                                                 |
+> | duration    | true     | float     | e.g. 1 (hrs in integer)                                       |
 > | weeks       | true     | int       | duration of the course in weeks                               |
 > | max         | true     | int       | max people number of the course                               |
 > | content     | true     | string    | content of course                                             |
@@ -66,10 +66,12 @@
 
 ##### Response
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `200`     | `application/json` | `{"message": "Update successfully."}` |
-> | `500`     | `application/json` | `{"message": "Error message"}`        |
+> | http code | content-type       | response                                          |
+> | --------- | ------------------ | ------------------------------------------------- |
+> | `200`     | `application/json` | `{"message": "Update successfully."}`             |
+> | `403`     | `text/plain`       | `Invalid token`                                   |
+> | `403`     | `application/json` | `{"message": "Not authorized to update courses"}` |
+> | `500`     | `application/json` | `{"message": "Error message"}`                    |
 
 </details>
 

@@ -82,7 +82,9 @@ export function checkBody<T extends BodyOptionalRaw | BodyRequiredRaw>(
   }
   if (
     (allRequired || body.duration !== undefined) &&
-    (typeof body.duration !== 'number' || body.duration <= 0)
+    (typeof body.duration !== 'number' ||
+      !Number.isInteger(body.duration) ||
+      body.duration <= 0)
   ) {
     throw new BodyVerificationError('duration must be a positive number')
   }
