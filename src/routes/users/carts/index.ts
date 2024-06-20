@@ -16,7 +16,7 @@ router.post('/', jwtProtect, async (req, res) => {
 
   const result = await createCart(user_mail)
   if (result.error) {
-    res.status(400).send(result.error)
+    return res.status(400).send(result.error)
   }
   return res.status(200).json({
     user_mail: result.user_mail,
@@ -39,13 +39,13 @@ router.post('/add', jwtProtect, async (req, res) => {
   const test = await verify_cart(user_mail, cart_id)
 
   if (test.error) {
-    res.status(400).send(test.error)
+    return res.status(400).send(test.error)
   }
 
   const result = await addProduct2Cart(new_product)
 
   if (result.error) {
-    res.status(400).send(result.error)
+    return res.status(400).send(result.error)
   }
   return res.status(200).json({
     cart_id: result.cart_id,
@@ -83,7 +83,7 @@ router.get('/list-cart', jwtProtect, async (req, res) => {
   const test = await verify_cart(user_mail, cart_id)
 
   if (test.error) {
-    res.status(400).send(test.error)
+    return res.status(400).send(test.error)
   }
 
   const result = await getAllProducts(cart_id)
@@ -96,8 +96,7 @@ router.get('/list-cart', jwtProtect, async (req, res) => {
       message: result.message, // 返回 message 字段
     })
   }
-
-  res.status(200).json({
+  return res.status(200).json({
     Products_in_Cart_List: result.arr,
   })
 })
@@ -109,14 +108,14 @@ router.delete('/', jwtProtect, async (req, res) => {
   const test = await verify_cart(user_mail, cart_id)
 
   if (test.error) {
-    res.status(400).send(test.error)
+    return res.status(400).send(test.error)
   }
 
   const result = await deleteCart(cart_id)
   if (result.error) {
     return res.status(400).send(result.error)
   }
-  res.status(200).json({
+  return res.status(200).json({
     Deleted_Cart_id: result.cart_id,
   })
 })
@@ -128,14 +127,15 @@ router.delete('/remove', jwtProtect, async (req, res) => {
   const test = await verify_cart(user_mail, cart_id)
 
   if (test.error) {
-    res.status(400).send(test.error)
+    return res.status(400).send(test.error)
   }
 
   const result = await deleteProduct(cart_id, product_id, size, color, count)
   if (result.error) {
     return res.status(400).send(result.error)
   }
-  res.status(200).json({
+
+  return res.status(200).json({
     cart_id: result.cart_id,
     deleted_product_id: result.product_id,
     deleted_size: result.size,
