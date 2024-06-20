@@ -12,6 +12,7 @@ import { deleteCourseUseTable } from '../../database/course_use_table/delete'
 import { deleteCourse } from '../../database/courses/delete'
 import { deleteTable } from '../../database/table/delete'
 import { getTablesFromCourseUseTable } from '../../database/course_use_table/get'
+import { patchCourse } from '../../database/courses/patch'
 
 const router = express.Router()
 
@@ -89,6 +90,85 @@ router.post('/', jwtProtect, async (req, res) => {
     console.error(e)
     return res.status(500).json({ message: 'Internal server error' })
   }
+})
+
+router.patch('/:course_id', jwtProtect, async (req, res) => {
+  if (req.body.decoded.role !== 'admin') {
+    return res.status(403).json({ message: 'Not authorized to update courses' })
+  }
+  const body = checkBody(req.body, false)
+  const courseId = req.params.course_id
+  if (
+    !courseId ||
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(
+      courseId
+    ) === false
+  ) {
+    return res.status(400).json({ message: 'course id must be a UUID' })
+  }
+
+  // 更改使用桌子
+  if (
+    body.weeks !== undefined &&
+    body.timeIdx !== undefined &&
+    body.usedTableId !== undefined &&
+    body.startDay !== undefined
+  ) {
+    await deleteCourseUseTable(courseId as UUID)
+    const timeIdxs = body.timeIdx
+    const usedTableIds = body.usedTableId
+    const startDay = body.startDay
+    Array.from({ length: body.weeks }).forEach((_, i) => {
+      const dateThisWeek = new Date(
+        startDay.getTime() + i * 7 * 24 * 60 * 60 * 1000
+      )
+      timeIdxs.forEach((timeIdx) => {
+        usedTableIds.forEach(async (usedTableId) => {
+          try {
+            await createNewTable({
+              timeIdx,
+              tableDate: dateThisWeek,
+              tableId: usedTableId,
+            })
+          } catch (e) {
+            return res.status(400).json({ message: 'Table already reserved' })
+          }
+          const newTableUse = await createCourseUseTable({
+            courseId: courseId as UUID,
+            usedTableId,
+            tableDate: dateThisWeek,
+            timeIdx,
+          })
+          if ('error' in newTableUse) {
+            console.error(newTableUse.error)
+            return res.status(500).json({ message: newTableUse.error })
+          }
+        })
+      })
+    })
+  } else if (body.weeks || body.timeIdx || body.usedTableId || body.startDay) {
+    return res.status(400).json({
+      message:
+        'weeks, timeIdx, usedTableId and startDay must be provided as whole or none',
+    })
+  }
+
+  // 更改教練
+  if (body.coachEmail) {
+    await deleteCoachIs(courseId as UUID)
+    body.coachEmail.forEach(async (email) => {
+      await createCoachIs({
+        courseId: courseId as UUID,
+        userMail: email,
+      })
+    })
+  }
+
+  // 更改課程本身
+  const { usedTableId, coachEmail, ...restBody } = body
+  await patchCourse(courseId as UUID, restBody)
+
+  return res.status(200).json({ message: 'Update successfully.' })
 })
 
 router.delete('/:course_id', jwtProtect, async (req, res) => {

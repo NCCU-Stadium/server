@@ -60,15 +60,17 @@
 
 ##### Body (application/json)
 
-> | key                             | required | data type | description |
-> | ------------------------------- | -------- | --------- | ----------- |
-> | ...something you want to update | true     |           |             |
+> | key                                                                                | required | data type | description |
+> | ---------------------------------------------------------------------------------- | -------- | --------- | ----------- |
+> | ...something you want to update. See body of create course for available fields    | true     |           |             |
+> | `weeks`, `timeIdx`, `usedTableId` and `startDay` must be provided as whole or none | false    |           |             |
 
 ##### Response
 
 > | http code | content-type       | response                                         |
 > | --------- | ------------------ | ------------------------------------------------ |
 > | `200`     | `application/json` | `{"message": "Update successfully."}`            |
+> | `400`     | `application/json` | `{ message: "Error message" }`                   |
 > | `403`     | `text/plain`       | `Invalid token`                                  |
 > | `403`     | `application/json` | `{"message": "Not authorized to update course"}` |
 > | `500`     | `application/json` | `{"message": "Error message"}`                   |
