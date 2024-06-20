@@ -1,4 +1,4 @@
-import { Pool, PoolClient } from 'pg'
+import { Pool, PoolClient, QueryResultRow } from 'pg'
 import { env } from '../constants'
 
 declare module 'pg' {
@@ -13,10 +13,13 @@ const pool = new Pool({
   connectionString: env.DATABASE_URL,
 })
 
-export async function query(text: string, params: any[]) {
+export async function query<
+  R extends QueryResultRow = any,
+  I extends any[] | undefined = any[],
+>(text: string, params: I) {
   const start = Date.now()
   console.log('executing query', { text })
-  const res = await pool.query(text, params)
+  const res = await pool.query<R>(text, params)
   const duration = Date.now() - start
   console.log('executed query', { text, duration, rows: res.rowCount })
   return res

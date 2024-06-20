@@ -18,23 +18,26 @@
 > | title       | true     | string    | title of the course                                           |
 > | timeSlot    | true     | int       | timeSlot of the course                                        |
 > | weekday     | true     | string    | e.g. Monday...                                                |
-> | coursetype  | true     | string    | e.g. group or private                                         |
-> | duration    | true     | int       | e.g. 1.5 hr                                                   |
+> | courseType  | true     | string    | e.g. group or private                                         |
+> | duration    | true     | float     | e.g. 1 (hrs in integer)                                       |
 > | weeks       | true     | int       | duration of the course in weeks                               |
 > | max         | true     | int       | max people number of the course                               |
 > | content     | true     | string    | content of course                                             |
-> | startday    | true     | string    | start date of the course                                      |
+> | startDay    | true     | string    | start date of the course, in format YYYY-MM-DD                |
 > | fee         | true     | int       | course fee                                                    |
-> | timeidx     | true     | int[]     | time index of the course (used for table reservations)        |
-> | usedtableid | true     | int[]     | table number used in the course (used for table reservations) |
-> | coach       | true     | string[]  | email of the coach                                            |
+> | timeIdx     | true     | int[]     | time index of the course (used for table reservations)        |
+> | usedTableId | true     | int[]     | table number used in the course (used for table reservations) |
+> | coachEmail  | true     | string[]  | email of the coaches                                          |
 
 ##### Responses
 
-> | http code           | content-type       | response                                                            |
-> | ------------------- | ------------------ | ------------------------------------------------------------------- |
-> | `200`               | `application/json` | `{"message": "Success", "course_id": "ObjectId of the new course"}` |
-> | `401`, `400`, `500` | `text/plain`       | N/A                                                                 |
+> | http code | content-type       | response                                                            |
+> | --------- | ------------------ | ------------------------------------------------------------------- |
+> | `200`     | `application/json` | `{"message": "Success", "course_id": "ObjectId of the new course"}` |
+> | `401`     | `text/plain`       | `"No token provided"` or `TokenExpiredError` or ...                 |
+> | `403`     | `text/plain`       | `Invalid token`                                                     |
+> | `403`     | `application/json` | `{"message": "Not authorized to create courses"}`                   |
+> | `500`     | `application/json` | `{"message": "Error message"}`                                      |
 
 </details>
 
@@ -57,16 +60,20 @@
 
 ##### Body (application/json)
 
-> | key                             | required | data type | description |
-> | ------------------------------- | -------- | --------- | ----------- |
-> | ...something you want to update | true     |           |             |
+> | key                                                                                | required | data type | description |
+> | ---------------------------------------------------------------------------------- | -------- | --------- | ----------- |
+> | ...something you want to update. See body of create course for available fields    | true     |           |             |
+> | `weeks`, `timeIdx`, `usedTableId` and `startDay` must be provided as whole or none | false    |           |             |
 
 ##### Response
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `200`     | `application/json` | `{"message": "Update successfully."}` |
-> | `500`     | `application/json` | `{"message": "Error message"}`        |
+> | http code | content-type       | response                                         |
+> | --------- | ------------------ | ------------------------------------------------ |
+> | `200`     | `application/json` | `{"message": "Update successfully."}`            |
+> | `400`     | `application/json` | `{ message: "Error message" }`                   |
+> | `403`     | `text/plain`       | `Invalid token`                                  |
+> | `403`     | `application/json` | `{"message": "Not authorized to update course"}` |
+> | `500`     | `application/json` | `{"message": "Error message"}`                   |
 
 </details>
 
@@ -89,28 +96,23 @@
 
 ##### Responses
 
-> | http code    | content-type       | response                                    |
-> | ------------ | ------------------ | ------------------------------------------- |
-> | `200`        | `application/json` | `{"message": "Delete course successfully"}` |
-> | `400`, `500` | `text/plain`       | N/A                                         |
+> | http code | content-type       | response                                         |
+> | --------- | ------------------ | ------------------------------------------------ |
+> | `200`     | `application/json` | `{"message": "Delete course successfully"}`      |
+> | `400`     | `application/json` | `{"message": "error message"}`                   |
+> | `403`     | `text/plain`       | `Invalid token`                                  |
+> | `403`     | `application/json` | `{"message": "Not authorized to delete course"}` |
 
 </details>
 
 <details>
 <summary><code>GET</code> <code><b>/</b></code> <code>(List all course)</code></summary>
 
-##### Query Parameters
-
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
-
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                                                                    |
+> | --------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+> | `200`     | `application/json` | `all course information in an array, whose item is a course and the same as create course, except that id is also included` |
 
 </details>
 <details>
@@ -124,9 +126,9 @@
 
 ##### Response
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                 |
+> | --------- | ------------------ | ------------------------------------------------------------------------ |
+> | `200`     | `application/json` | `course info, as same as create course, except that id is also included` |
+> | `400` ... | `application/json` | `{ message: "error message" }`                                           |
 
 </details>

@@ -17,13 +17,14 @@ import {
   activitiesRouter,
   usersRouter,
   productsRouter,
+  courseRouter,
   announcementsRouter,
 } from './routes'
-
 app.use('/auth', authRouter)
 app.use('/activities', activitiesRouter)
 app.use('/shops/products', productsRouter)
 app.use('/users', usersRouter)
+app.use('/courses', courseRouter)
 app.use('/announcements', announcementsRouter)
 
 app.use((err, req, res, next) => {
