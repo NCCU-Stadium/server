@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import cors from 'cors'
 
 const app = express()
@@ -27,10 +27,12 @@ app.use('/users', usersRouter)
 app.use('/courses', courseRouter)
 app.use('/announcements', announcementsRouter)
 
-app.use((err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err.stack)
   res.status(500).send('Something broke!')
-})
+}
+
+app.use(errorHandler)
 
 app.listen(8080, () => {
   console.log(`Server is running on port ${port}`)
