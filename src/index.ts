@@ -26,6 +26,11 @@ app.use('/shops/products', productsRouter)
 app.use('/users', usersRouter)
 app.use('/announcements', announcementsRouter)
 
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+
 app.listen(8080, () => {
   console.log(`Server is running on port ${port}`)
 })
