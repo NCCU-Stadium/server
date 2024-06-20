@@ -7,6 +7,11 @@ import { createNewTable } from '../../database/table/post'
 import { createCourseUseTable } from '../../database/course_use_table/post'
 import { createCoachIs } from '../../database/coachIs/post'
 import { getCourse } from '../../database/courses/get'
+import { deleteCoachIs } from '../../database/coachIs/delete'
+import { deleteCourseUseTable } from '../../database/course_use_table/delete'
+import { deleteCourse } from '../../database/courses/delete'
+import { deleteTable } from '../../database/table/delete'
+import { getTablesFromCourseUseTable } from '../../database/course_use_table/get'
 
 const router = express.Router()
 
@@ -84,6 +89,28 @@ router.post('/', jwtProtect, async (req, res) => {
     console.error(e)
     return res.status(500).json({ message: 'Internal server error' })
   }
+})
+
+router.delete('/:course_id', jwtProtect, async (req, res) => {
+  if (req.body.decoded.role !== 'admin') {
+    return res.status(403).json({ message: 'Not authorized to delete courses' })
+  }
+  const courseId = req.params.course_id
+  const course = await getCourse(courseId as UUID)
+  if ('error' in course) {
+    return res.status(400).json({ message: course.error })
+  }
+  const tables = await getTablesFromCourseUseTable(courseId as UUID)
+
+  await Promise.all([
+    deleteCourseUseTable(courseId as UUID),
+    deleteCoachIs(courseId as UUID),
+  ])
+  await Promise.all([
+    ...tables.map((table) => deleteTable(table)),
+    deleteCourse(courseId as UUID),
+  ])
+  return res.status(200).json({ message: 'Delete course successfully' })
 })
 
 router.get('/', async (req, res) => {
