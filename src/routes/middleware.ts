@@ -1,6 +1,12 @@
 import jwt from 'jsonwebtoken'
 import express from 'express'
 import { env } from '../constants'
+import { ErrorRequestHandler } from 'express'
+
+export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+  console.error(err.stack)
+  res.status(500).send('Internal Server Error')
+}
 
 export function jwtProtect(
   req: express.Request,

@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler } from 'express'
+import express from 'express'
 import cors from 'cors'
 
 const app = express()
@@ -27,11 +27,7 @@ app.use('/users', usersRouter)
 app.use('/courses', courseRouter)
 app.use('/announcements', announcementsRouter)
 
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-}
-
+import { errorHandler } from './routes/middleware'
 app.use(errorHandler)
 
 app.listen(8080, () => {
