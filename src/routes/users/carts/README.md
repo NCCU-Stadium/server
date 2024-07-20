@@ -13,18 +13,12 @@ Add a new cart for given user.
 > | ------------- | -------------- | ------------- |
 > | Authorization | `Bearer token` | The jwt token |
 
-##### Body (application/json or application/x-www-form-urlencoded)
-
-> | key   | required | data type | description |
-> | ----- | -------- | --------- | ----------- |
-> | `...` | `...`    | `...`     | ` ...`      |
-
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                          |
+> | --------- | ------------------ | ----------------------------------------------------------------- |
+> | `200`     | `application/json` | `{"user_mail": "mail@mail.com", "isdone": bool, "cart_id": "id"}` |
+> | `400`     | `text/plain`       | `error message`                                                   |
 
 </details>
 
@@ -41,16 +35,16 @@ Add a new cart for given user.
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
+> | key     | required | data type | description        |
+> | ------- | -------- | --------- | ------------------ |
+> | cart_id | true     | string    | The id of the cart |
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                  |
+> | --------- | ------------------ | ------------------------- |
+> | `200`     | `application/json` | `{"Deleted_Cart_id": []}` |
+> | `400`     | `text/plain`       | `error message`           |
 
 </details>
 
@@ -77,10 +71,10 @@ Add a new product for given cart. (Check if the cart belongs to the user)
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                                   |
+> | --------- | ------------------ | ------------------------------------------------------------------------------------------ |
+> | `200`     | `application/json` | `{"cart_id": "id", "product_id": "id", "size": "size", "color": "color", "count": number}` |
+> | `400`     | `text/plain`       | `error message`                                                                            |
 
 </details>
 
@@ -107,10 +101,20 @@ Remove a product from given cart. (Check if the cart belongs to the user)
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+```typescript
+type RemoveResponse = {
+  cart_id: string
+  deleted_product_id: string
+  deleted_size: string
+  deleted_color: string
+  deleted_count: string
+}
+```
+
+> | http code | content-type       | response         |
+> | --------- | ------------------ | ---------------- |
+> | `200`     | `application/json` | `RemoveResponse` |
+> | `400`     | `text/plain`       | `error message`  |
 
 </details>
 
@@ -127,18 +131,12 @@ Remove a product from given cart. (Check if the cart belongs to the user)
 > | ------------- | -------------- | ------------- |
 > | Authorization | `Bearer token` | The jwt token |
 
-##### Query Parameters
-
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
-
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response             |
+> | --------- | ------------------ | -------------------- |
+> | `200`     | `application/json` | `{"Carts_List": []}` |
+> | `500`     | `text/plain`       | `error message`      |
 
 </details>
 
@@ -159,9 +157,9 @@ Remove a product from given cart. (Check if the cart belongs to the user)
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `200`     | `application/json` | `{"Products_in_Cart_List": []}` |
+> | `400`     | `text/plain`       | `error message`                 |
 
 </details>
