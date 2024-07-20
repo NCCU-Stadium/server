@@ -18,12 +18,13 @@
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                           |
+> | --------- | ------------------ | ---------------------------------------------------------------------------------- |
+> | `200`     | `application/json` | `{"mail": "mail@mail.com", "name": "name", "course_id": id, "leave_count": count}` |
+> | `400`     | `text/plain`       | `error message`                                                                    |
 
 </details>
+
 <details>
 <summary><code>PATCH</code> <code><b>/leave</b></code> <code>(course leave)</code></summary>
 
@@ -66,10 +67,10 @@
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response                                                                           |
+> | --------- | ------------------ | ---------------------------------------------------------------------------------- |
+> | `200`     | `application/json` | `{"mail": "mail@mail.com", "name": "name", "course_id": id, "leave_count": count}` |
+> | `400`     | `text/plain`       | `bad request`                                                                      |
 
 </details>
 
@@ -82,17 +83,11 @@
 > | ------------- | -------------- | ------------- |
 > | Authorization | `Bearer token` | The jwt token |
 
-##### Query Parameters
-
-> | key | required | data type | description |
-> | --- | -------- | --------- | ----------- |
-> | ... | ...      | ...       | ...         |
-
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | http code | content-type       | response             |
+> | --------- | ------------------ | -------------------- |
+> | `200`     | `application/json` | `...`                |
+> | `400`     | `text/plain`       | `No attended course` |
 
 </details>
