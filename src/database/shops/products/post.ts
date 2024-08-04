@@ -8,13 +8,19 @@ export const createProduct = async (
   imgurl: string[]
 ) => {
   const queryText = `
-    INSERT INTO product_t (name, brand, price, "desc" ,imgurl)
-    VALUES ($1, $2, $3, $4, ARRAY[$5])
-    RETURNING id
+    insert into product_t (name, brand, price, "desc") values ($1, $2, $3, $4) returning id
   `
-  const values = [name, brand, price, desc, imgurl]
+  const values = [name, brand, price, desc]
   const result = await query(queryText, values)
-  return result.rows[0].id
+  const queryInsertImg = `
+    update product_t set imgurl = array_append(imgurl, $2) where id = $1 returning id
+  `
+  let res = null
+  for (const url of imgurl) {
+    res = await query(queryInsertImg, [result.rows[0].id, url])
+  }
+  if (res === null) return null
+  return res.rows[0].id
 }
 
 export const addProductInfo = async (
@@ -25,7 +31,7 @@ export const addProductInfo = async (
   count: number
 ) => {
   const queryText = `
-    INSERT INTO "productStore_t" (product_id, size, color, count, sold)
+    INSERT INTO "productstore_t" (product_id, size, color, count, sold)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING id
   `
