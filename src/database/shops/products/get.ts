@@ -28,7 +28,7 @@ export const getAllProducts = async () => {
 
 export const getProductInfo = async (product_id: string) => {
   const result = await query(
-    'SELECT * FROM "productStore_t" WHERE product_id = $1',
+    'SELECT * FROM "productstore_t" WHERE product_id = $1',
     [product_id]
   )
   if (result.rowCount == 0) {

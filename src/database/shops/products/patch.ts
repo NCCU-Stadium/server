@@ -38,7 +38,7 @@ export const updateProductInfo = async (
     .join(', ')
   const values = Object.values(updates)
   await query(
-    `UPDATE "productStore_t" SET ${fields} WHERE product_id = $1 AND id = $2`,
+    `UPDATE "productstore_t" SET ${fields} WHERE product_id = $1 AND id = $2`,
     [product_id, product_store_id, ...values]
   )
 }

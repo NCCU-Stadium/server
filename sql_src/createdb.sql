@@ -1,5 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 CREATE TABLE IF NOT EXISTS "user_t" (
   "mail" varchar PRIMARY KEY,
   "role" varchar,
@@ -10,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "user_t" (
   "unpaid" integer not null default 0
 );
 
-CREATE TABLE IF NOT EXISTS "purchaseHis_t" (
+CREATE TABLE IF NOT EXISTS "purchasehis_t" (
   "user_mail" varchar,
   "id" uuid not null default uuid_generate_v4(),
   "time" timestamp with time zone not null default now(),
@@ -33,14 +31,14 @@ CREATE TABLE IF NOT EXISTS "product_t" (
   "imgurl" varchar[] not null default ARRAY[]::varchar[]
 );
 
-CREATE TABLE IF NOT EXISTS "productStore_t" (
+CREATE TABLE IF NOT EXISTS "productstore_t" (
   "product_id" uuid,
   "size" varchar,
   "color" varchar,
   "count" integer not null default 1,
   "id" uuid not null default uuid_generate_v4(),
   "sold" integer,
-  PRIMARY KEY ("product_id", "size", "color", "id")
+  PRIMARY KEY ("product_id", "id")
 );
 
 CREATE TABLE IF NOT EXISTS "cart_t" (
@@ -91,7 +89,7 @@ CREATE TABLE IF NOT EXISTS "user_take_course_t" (
   PRIMARY KEY ("user_mail", "user_name", "course_id")
 );
 
-CREATE TABLE IF NOT EXISTS "coachIs_t" (
+CREATE TABLE IF NOT EXISTS "coachis" (
   "user_mail" varchar,
   "course_id" uuid,
   PRIMARY KEY ("user_mail", "course_id")
@@ -120,13 +118,11 @@ CREATE TABLE IF NOT EXISTS "course_use_table_t" (
   PRIMARY KEY ("courseid", "usedtableid", "tabledate", "timeidx")
 );
 
--- purchaseHis_t
-ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
--- ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id");
--- ALTER TABLE "purchaseHis_t" ADD FOREIGN KEY ("product_id", "product_size", "product_color", "product_store_id") REFERENCES "productStore_t" ("product_id", "size", "color", "id");
+-- purchasehis_t
+ALTER TABLE "purchasehis_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
 
--- productStore_t
-ALTER TABLE "productStore_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id") on delete cascade;
+-- productstore_t
+ALTER TABLE "productstore_t" ADD FOREIGN KEY ("product_id") REFERENCES "product_t" ("id") on delete cascade;
 
 -- cart_t
 ALTER TABLE "cart_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
@@ -143,9 +139,9 @@ ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_
 ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_mail", "user_name") REFERENCES "subuser_t" ("user_mail", "name");
 ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
 
--- coachIs_t
-ALTER TABLE "coachIs_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
-ALTER TABLE "coachIs_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
+-- coachis
+ALTER TABLE "coachis" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
+ALTER TABLE "coachis" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
 
 -- user_reserve_table_t
 ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");

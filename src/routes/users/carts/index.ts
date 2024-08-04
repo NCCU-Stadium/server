@@ -64,10 +64,7 @@ router.get('/list', jwtProtect, async (req, res) => {
   //   return res.status(400).send(result.error)
   // }
   if (result.message) {
-    return res.status(200).json({
-      Carts_List: [],
-      message: result.message, // 返回 message 字段
-    })
+    return res.status(500).send(result.message)
   }
 
   return res.status(200).json({
@@ -91,10 +88,7 @@ router.get('/list-cart', jwtProtect, async (req, res) => {
   //   return res.status(400).send(result.error)
   // }
   if (result.message) {
-    return res.status(200).json({
-      Carts_List: [],
-      message: result.message, // 返回 message 字段
-    })
+    return res.status(500).send(result.message)
   }
   return res.status(200).json({
     Products_in_Cart_List: result.arr,

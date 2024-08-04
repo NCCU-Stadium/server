@@ -62,20 +62,30 @@ The user's role should be 'admin' to modify an announcement.
 <details>
 <summary><code>GET</code> <code><b>/</b></code> <code>(Get announcement list)</code></summary>
 
+Date format: 'year-month-day' _e.g._ '2024-06-12'
+
 ##### Query Parameters
 
 > | key   | required | data type | description                         |
 > | ----- | -------- | --------- | ----------------------------------- |
 > | start | false    | string    | Start time of the retrieval request |
 > | end   | false    | string    | End time of the retrieval request   |
-> | ...   | ...      | ...       | ...                                 |
 
 ##### Responses
 
-> | http code | content-type       | response        |
-> | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+```typescript
+type Res = {
+  id: string
+  title: string
+  content: string
+  time: TimeStamp
+}
+```
+
+> | http code | content-type       | response                |
+> | --------- | ------------------ | ----------------------- |
+> | `200`     | `application/json` | `{[{Res}, {Res}, ...]}` |
+> | `400`     | `text/plain`       | `error message`         |
 
 </details>
 
@@ -90,9 +100,18 @@ The user's role should be 'admin' to modify an announcement.
 
 ##### Responses
 
+```typescript
+type Res = {
+  id: string
+  title: string
+  content: string
+  time: TimeStamp
+}
+```
+
 > | http code | content-type       | response        |
 > | --------- | ------------------ | --------------- |
-> | `200`     | `application/json` | `...`           |
-> | `400` ... | `text/plain`       | `error message` |
+> | `200`     | `application/json` | `{Res}`         |
+> | `400`     | `text/plain`       | `error message` |
 
 </details>
