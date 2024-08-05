@@ -7,19 +7,23 @@
 
 ##### Body (application/json or application/x-www-form-urlencoded)
 
-> | key      | required | data type | description                |
-> | -------- | -------- | --------- | -------------------------- |
-> | email    | true     | string    | User's mail                |
-> | password | true     | string    | User's password            |
-> | phone    | true     | string    | User's phone               |
-> | role     | true     | string    | "user", "admin" or "coach" |
+> | key      | required | data type | description                  |
+> | -------- | -------- | --------- | ---------------------------- |
+> | email    | true     | string    | User's mail                  |
+> | password | true     | string    | User's password              |
+> | phone    | true     | string    | User's phone                 |
+> | role     | true     | string    | "user", "admin" or "coach"   |
+> | name     | true     | string    | Default's user name          |
+> | avatar   | false    | string    | Avatar url                   |
+> | gender   | false    | string    | "F" or "M"                   |
+> | birth    | false    | string    | YYYY-MM-DD _e.g._ 2003-04-01 |
 
 ##### Responses
 
-> | http code    | content-type       | response                                                                               |
-> | ------------ | ------------------ | -------------------------------------------------------------------------------------- |
-> | `200`        | `application/json` | `{"mail": "user's mail", "role": "user" \| "admin" \| "coach", phone: "phone number"}` |
-> | `409`, `500` | `text/plain`       | `error message`                                                                        |
+> | http code    | content-type       | response                  |
+> | ------------ | ------------------ | ------------------------- |
+> | `200`        | `application/json` | `{"mail": "user's mail"}` |
+> | `409`, `500` | `text/plain`       | `error message`           |
 
 </details>
 
