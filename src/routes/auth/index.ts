@@ -11,20 +11,20 @@ router.get('/', async (_req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  const { email, password, phone, role } = req.body
+  const { email, password, phone, role, name, avatar, gender, birth } = req.body
   const hasUser = await getUser(email)
   if (!hasUser.error) {
     return res.status(409).send('user already exists')
   }
   const encrypted = encryptPassword(password)
-  const newUser: NewUserType = { mail: email, pass: encrypted, phone, role }
+  // prettier-ignore
+  const newUser: NewUserType = { mail: email, pass: encrypted, phone, role, name, avatar, gender, birth }
   const result = await createUser(newUser)
   if (result.error) {
-    res.status(500).send(result.error)
+    console.error(result.error)
+    return res.status(500).send(result.error)
   }
-  return res
-    .status(200)
-    .json({ mail: result.mail, role: result.role, phone: result.phone })
+  return res.status(200).json({ mail: result.mail })
 })
 
 router.post('/login', async (req, res) => {
