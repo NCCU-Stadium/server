@@ -24,3 +24,28 @@ export async function createUser(newuser: NewUserType) {
     phone: res.rows[0].phone,
   }
 }
+
+export type SubUserType = {
+  email: string
+  username: string
+  avatar?: string
+  gender: string
+  birth: string
+}
+export async function createSubuser(props: SubUserType) {
+  const { email, username, avatar, gender, birth } = props
+  const qstring = `insert into subuser_t (user_mail, avatar, name, gender, birth) values ($1, $2, $3, $4, $5) returning name`
+  let res
+  try {
+    res = await query(qstring, [email, avatar, username, gender, birth])
+  } catch (err) {
+    return { error: err }
+  }
+  if (!res || !res.rowCount) {
+    return { error: 'subuser not created' }
+  }
+  if (res.rowCount === 0) {
+    return { error: 'subuser not created' }
+  }
+  return res.rows[0].name
+}
