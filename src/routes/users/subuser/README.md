@@ -81,7 +81,7 @@ At least provide one of the following.
 ### Retrieve Subuser Info
 
 <details>
-<summary><code>GET</code> <code><b>/{username}</b></code> <code>(Get info of specified subuser)</code></summary>
+<summary><code>GET</code> <code><b>/{mail}/{username}</b></code> <code>(Get info of specified subuser)</code></summary>
 
 ##### Responses
 
@@ -93,7 +93,7 @@ At least provide one of the following.
 </details>
 
 <details>
-<summary><code>GET</code> <code><b>/</b></code> <code>(Get list of subusers)</code></summary>
+<summary><code>GET</code> <code><b>/{mail}</b></code> <code>(Get list of subusers)</code></summary>
 
 ##### Responses
 
