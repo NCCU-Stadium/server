@@ -2,6 +2,7 @@ import express from 'express'
 import { jwtProtect } from '../../middleware'
 import { createSubuser } from '../../../database/users/post'
 import { deleteSubuser } from '../../../database/users/delete'
+import { getSubuser, getSubuserInfo } from '../../../database/users/get'
 const router = express.Router()
 
 /**
@@ -39,6 +40,37 @@ router.delete('/:username', jwtProtect, async (req, res) => {
       .json({ message: 'Error deleting subuser', error: result.error })
   }
   return res.status(200).send('Deleted')
+})
+
+/**
+ * GET /users/subuser/{mail}
+ * Get list of subusers
+ */
+router.get('/:mail', async (req, res) => {
+  const { mail } = req.params
+  const result = await getSubuser(mail)
+  if (result.error) {
+    return res
+      .status(500)
+      .json({ message: 'Error geting subuser', error: result.error })
+  }
+  return res.status(200).json(result.arr)
+})
+
+/**
+ * GET /users/subuser/{mail}/{username}
+ * Get info of specified subuser
+ */
+
+router.get('/:mail/:username', async (req, res) => {
+  const { mail, username } = req.params
+  const result = await getSubuserInfo(mail, username)
+  if (result.error) {
+    return res
+      .status(500)
+      .json({ message: 'Error geting subuser', error: result.error })
+  }
+  return res.status(200).json(result.arr)
 })
 
 export default router
