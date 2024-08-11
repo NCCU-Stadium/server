@@ -61,7 +61,6 @@ router.get('/:mail', async (req, res) => {
  * GET /users/subuser/{mail}/{username}
  * Get info of specified subuser
  */
-
 router.get('/:mail/:username', async (req, res) => {
   const { mail, username } = req.params
   const result = await getSubuserInfo(mail, username)
