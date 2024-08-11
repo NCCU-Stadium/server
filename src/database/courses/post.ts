@@ -3,7 +3,7 @@ import { query } from '../database'
 
 export type NewCourseType = {
   title: string
-  timeSlot: number
+  timeSlot: 'Morning' | 'Afternoon' | 'Night'
   weekday:
     | 'Monday'
     | 'Tuesday'

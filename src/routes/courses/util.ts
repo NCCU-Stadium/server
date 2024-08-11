@@ -2,7 +2,7 @@ export class BodyVerificationError extends Error {}
 
 interface BodyRequiredRaw {
   title: string
-  timeSlot: number
+  timeSlot: 'Morning' | 'Afternoon' | 'Night'
   weekday:
     | 'Monday'
     | 'Tuesday'
@@ -52,11 +52,11 @@ export function checkBody<T extends BodyOptionalRaw | BodyRequiredRaw>(
   }
   if (
     (allRequired || body.timeSlot !== undefined) &&
-    (typeof body.timeSlot !== 'number' ||
-      !Number.isInteger(body.timeSlot) ||
-      body.timeSlot < 0)
+    ['Morning', 'Afternoon', 'Night'].indexOf(body.timeSlot as string) === -1
   ) {
-    throw new BodyVerificationError('timeSlot must be an integer')
+    throw new BodyVerificationError(
+      'timeSlot must be one of Morning, Afternoon or Night'
+    )
   }
   if (
     (allRequired || body.weekday !== undefined) &&
