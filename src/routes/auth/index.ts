@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
   // check if user exists
   const user = await getUser(email)
   if (user.error) {
-    res.status(500).send(user.error)
+    return res.status(500).send(user.error)
   }
   // check if password matches
   if (!comparePassword(password, user.pass)) {
