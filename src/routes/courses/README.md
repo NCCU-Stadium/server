@@ -16,7 +16,7 @@
 > | key         | required | data type | description                                                   |
 > | ----------- | -------- | --------- | ------------------------------------------------------------- |
 > | title       | true     | string    | title of the course                                           |
-> | timeSlot    | true     | int       | timeSlot of the course                                        |
+> | timeSlot    | true     | int       | timeSlot of the course (Morning, Afternoon or Night)          |
 > | weekday     | true     | string    | e.g. Monday...                                                |
 > | courseType  | true     | string    | e.g. group or private                                         |
 > | duration    | true     | float     | e.g. 1 (hrs in integer)                                       |
