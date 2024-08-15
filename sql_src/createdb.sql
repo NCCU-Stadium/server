@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS "cart_contain_product" (
 
 CREATE TABLE IF NOT EXISTS "course_t" (
   "id" uuid PRIMARY KEY not null default uuid_generate_v4(),
-  "timeslot" integer,
-  "weekday" varchar,
-  "coursetype" varchar,
-  "duration" integer,
+  "timeslot" varchar not null,
+  "weekday" varchar not null,
+  "coursetype" varchar not null,
+  "duration" smallint,
   "title" varchar,
-  "weeks" integer,
-  "max" integer,
+  "weeks" smallint,
+  "max" smallint,
   "content" varchar,
   "startday" date,
   "timeidx" integer[],
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS "user_take_course_t" (
   PRIMARY KEY ("user_mail", "user_name", "course_id")
 );
 
-CREATE TABLE IF NOT EXISTS "coachis" (
+CREATE TABLE IF NOT EXISTS "coachis_t" (
   "user_mail" varchar,
   "course_id" uuid,
   PRIMARY KEY ("user_mail", "course_id")
@@ -139,9 +139,9 @@ ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_
 ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("user_mail", "user_name") REFERENCES "subuser_t" ("user_mail", "name");
 ALTER TABLE "user_take_course_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
 
--- coachis
-ALTER TABLE "coachis" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
-ALTER TABLE "coachis" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
+-- coachis_t
+ALTER TABLE "coachis_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");
+ALTER TABLE "coachis_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
 
 -- user_reserve_table_t
 ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("user_mail") REFERENCES "user_t" ("mail");

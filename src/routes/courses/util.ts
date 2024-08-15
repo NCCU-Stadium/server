@@ -11,7 +11,7 @@ interface BodyRequiredRaw {
     | 'Friday'
     | 'Saturday'
     | 'Sunday'
-  courseType: 'group' | 'private'
+  courseType: 'Group' | 'Private'
   duration: number
   weeks: number
   max: number
@@ -76,7 +76,7 @@ export function checkBody<T extends BodyOptionalRaw | BodyRequiredRaw>(
   }
   if (
     (allRequired || body.courseType !== undefined) &&
-    ['group', 'private'].indexOf(body.courseType as string) === -1
+    ['Group', 'Private'].indexOf(body.courseType as string) === -1
   ) {
     throw new BodyVerificationError('courseType must be a string')
   }

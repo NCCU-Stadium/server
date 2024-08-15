@@ -12,7 +12,7 @@ export type NewCourseType = {
     | 'Friday'
     | 'Saturday'
     | 'Sunday'
-  courseType: 'group' | 'private'
+  courseType: 'Group' | 'Private'
   duration: number
   weeks: number
   max: number

@@ -16,10 +16,10 @@
 > | key         | required | data type | description                                                   |
 > | ----------- | -------- | --------- | ------------------------------------------------------------- |
 > | title       | true     | string    | title of the course                                           |
-> | timeSlot    | true     | int       | timeSlot of the course (Morning, Afternoon or Night)          |
+> | timeSlot    | true     | string    | timeSlot of the course (Morning, Afternoon or Night)          |
 > | weekday     | true     | string    | e.g. Monday...                                                |
-> | courseType  | true     | string    | e.g. group or private                                         |
-> | duration    | true     | float     | e.g. 1 (hrs in integer)                                       |
+> | courseType  | true     | string    | e.g. Group or Private                                         |
+> | duration    | true     | int       | e.g. 60 (minutes)                                             |
 > | weeks       | true     | int       | duration of the course in weeks                               |
 > | max         | true     | int       | max people number of the course                               |
 > | content     | true     | string    | content of course                                             |

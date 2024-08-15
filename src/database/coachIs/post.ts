@@ -8,7 +8,7 @@ export type NewCoachIsType = {
 
 export async function createCoachIs(newCoachIs: NewCoachIsType) {
   const qstring =
-    'insert into "coachIs_t" (user_mail, course_id) values ($1, $2) returning *'
+    'insert into "coachis_t" (user_mail, course_id) values ($1, $2) returning *'
   const res = await query(qstring, [newCoachIs.userMail, newCoachIs.courseId])
   if (res.rowCount === 0) {
     return { error: 'course coach is not created' }
