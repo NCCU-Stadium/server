@@ -42,7 +42,23 @@ export async function getSubuserInfo(mail: string, name: string) {
   if (res.rowCount === 0) {
     return { error: 'subUser not found' }
   }
-  return { arr: res.rows }
+  type returnObjType = {
+    mail: string
+    avatar?: string
+    createdAt: string
+    name: string
+    gender?: string
+    birth?: string
+  }
+  const obj: returnObjType = {
+    mail: res.rows[0].user_mail,
+    avatar: res.rows[0].avatar,
+    createdAt: res.rows[0].created_at,
+    name: res.rows[0].name,
+    gender: res.rows[0].gender,
+    birth: res.rows[0].birth,
+  }
+  return { arr: obj }
 
   // return {
   //   mail: res.rows[0].mail,

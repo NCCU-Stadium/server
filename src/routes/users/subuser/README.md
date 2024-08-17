@@ -85,10 +85,21 @@ At least provide one of the following.
 
 ##### Responses
 
-> | http code | content-type       | response                                                                                                |
-> | --------- | ------------------ | ------------------------------------------------------------------------------------------------------- |
-> | `200`     | `application/json` | `{"email": "mail@mail.com", "avatar": "https://...", "name": "name", gender: "F", "birth": "2000-1-1"}` |
-> | `400`     | `text/plain`       | `error message`                                                                                         |
+```typescript
+type Subuser = {
+  mail: string
+  avatar?: string
+  createdAt: string
+  name: string
+  gender?: string
+  birth?: string
+}
+```
+
+> | http code | content-type       | response        |
+> | --------- | ------------------ | --------------- |
+> | `200`     | `application/json` | `{Subuser}`     |
+> | `400`     | `text/plain`       | `error message` |
 
 </details>
 
