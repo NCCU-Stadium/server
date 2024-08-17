@@ -58,3 +58,45 @@ export async function createSubuser(props: SubUserType) {
   }
   return res.rows[0].name
 }
+
+export type UnpaidQueryType = {
+  email: string
+  amount: number
+  operation: 'add' | 'sub'
+}
+export async function changeUnpaid(props: UnpaidQueryType) {
+  const { email, amount, operation } = props
+  const operator = operation === 'add' ? '+' : '-'
+  const qstring = `update user_t set unpaid = unpaid ${operator} $1 where mail = $2 returning unpaid, mail`
+  let res
+  try {
+    res = await query(qstring, [amount, email])
+  } catch (err) {
+    return { error: err }
+  }
+  if (!res || !res.rowCount) return { error: 'unpaid not changed' }
+  if (res.rowCount === 0) return { error: 'unpaid not changed' }
+
+  return { unpaid: res.rows[0].unpaid, mail: res.rows[0].mail }
+}
+
+export type PointQueryType = {
+  email: string
+  amount: number
+  operation: 'add' | 'sub'
+}
+export async function changePoint(props: UnpaidQueryType) {
+  const { email, amount, operation } = props
+  const operator = operation === 'add' ? '+' : '-'
+  const qstring = `update user_t set point = point ${operator} $1 where mail = $2 returning point, mail`
+  let res
+  try {
+    res = await query(qstring, [amount, email])
+  } catch (err) {
+    return { error: err }
+  }
+  if (!res || !res.rowCount) return { error: 'point not changed' }
+  if (res.rowCount === 0) return { error: 'point not changed' }
+
+  return { point: res.rows[0].point, mail: res.rows[0].mail }
+}
