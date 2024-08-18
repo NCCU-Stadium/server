@@ -7,7 +7,10 @@ import {
 } from '../../../database/users/courses/post'
 import { leaveUserCourse } from '../../../database/users/courses/patch'
 import { removeUserCourse } from '../../../database/users/courses/delete'
-import { getUserCourses } from '../../../database/users/courses/get'
+import {
+  getUserCourses,
+  getUserCoursesBySubuser,
+} from '../../../database/users/courses/get'
 
 const router = express.Router()
 
@@ -58,6 +61,16 @@ router.get('/list', jwtProtect, async (req, res) => {
     return res.status(400).send(result.error)
   }
   res.status(200).json(result.arr)
+})
+
+router.get('/list/:username', jwtProtect, async (req, res) => {
+  const mail = req.body.decoded.mail
+  const username = req.params.username
+  const result = await getUserCoursesBySubuser(mail, username)
+  if (result.error) {
+    return res.status(400).send(result.error)
+  }
+  res.status(200).json(result.res)
 })
 
 export default router

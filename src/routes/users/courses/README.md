@@ -91,3 +91,38 @@
 > | `400`     | `text/plain`       | `No attended course` |
 
 </details>
+
+<details>
+<summary><code>GET</code> <code><b>/list/{username}</b></code> <code>(list all courses for the user)</code></summary>
+
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Responses
+
+```typescript
+type Res = {
+  courseId: string
+  leaveCout: string
+  timeSlot: string
+  weekDay: string
+  courseType: string
+  duration: number
+  title: string
+  weeks: number
+  content: string
+  startDay: string
+  timeIdx: number[]
+  fee: number
+}
+```
+
+> | http code | content-type       | response             |
+> | --------- | ------------------ | -------------------- |
+> | `200`     | `application/json` | `{Res}`              |
+> | `400`     | `text/plain`       | `No attended course` |
+
+</details>
