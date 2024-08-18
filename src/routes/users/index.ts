@@ -3,6 +3,7 @@ import reservesRouter from './reserves'
 import cartsRouter from './carts'
 import coursesRouter from './courses'
 import subuserRouter from './subuser'
+import transactionRouter from './transactions'
 import { adminProtect, jwtProtect } from '../middleware'
 import { getUser } from '../../database/users/get'
 import { changeUnpaid, changePoint } from '../../database/users/post'
@@ -13,6 +14,7 @@ router.use('/courses', coursesRouter)
 router.use('/reserves', reservesRouter)
 router.use('/carts', cartsRouter)
 router.use('/subusers', subuserRouter)
+router.use('/transactions', transactionRouter)
 
 /**
  * GET /users/points
@@ -21,8 +23,19 @@ router.use('/subusers', subuserRouter)
 router.get('/points', jwtProtect, async (req, res) => {
   const { mail } = req.body.decoded
   const user = await getUser(mail)
-  if (user.error) return res.status(500).send({ error: user.error })
+  if (user.error) return res.status(500).send(user.error)
   return res.send({ points: user.point })
+})
+
+/**
+ * GET /users/points
+ * Get user's point number
+ */
+router.get('/unpaid', jwtProtect, async (req, res) => {
+  const { mail } = req.body.decoded
+  const user = await getUser(mail)
+  if (user.error) return res.status(500).send(user.error)
+  return res.send({ unpaid: user.unpaid })
 })
 
 type changePointQueryType = {

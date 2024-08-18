@@ -13,10 +13,10 @@
 
 ##### Responses
 
-> | http code | content-type       | response             |
-> | --------- | ------------------ | -------------------- |
-> | `200`     | `application/json` | `{"points": "num"}`  |
-> | `500`     | `application/json` | `{"error", "error"}` |
+> | http code | content-type       | response            |
+> | --------- | ------------------ | ------------------- |
+> | `200`     | `application/json` | `{"points": "num"}` |
+> | `500`     | `text/plain`       | `err message`       |
 
 </details>
 
@@ -84,6 +84,24 @@
 </details>
 
 ### Unpaid
+
+<details>
+<summary><code>GET</code> <code><b>/unpaid</b></code> <code>(Get user's unpaid number)</code></summary>
+
+##### Headers
+
+> | key           | value          | description   |
+> | ------------- | -------------- | ------------- |
+> | Authorization | `Bearer token` | The jwt token |
+
+##### Responses
+
+> | http code | content-type       | response            |
+> | --------- | ------------------ | ------------------- |
+> | `200`     | `application/json` | `{"unpaid": "num"}` |
+> | `500`     | `text/plain`       | `error message`     |
+
+</details>
 
 <details>
 <summary><code>POST</code> <code><b>/unpaid/add</b></code> <code>(Change unpaid number)</code></summary>
