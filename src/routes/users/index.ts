@@ -12,7 +12,7 @@ const router = express.Router()
 router.use('/courses', coursesRouter)
 router.use('/reserves', reservesRouter)
 router.use('/carts', cartsRouter)
-router.use('/subuser', subuserRouter)
+router.use('/subusers', subuserRouter)
 
 /**
  * GET /users/points

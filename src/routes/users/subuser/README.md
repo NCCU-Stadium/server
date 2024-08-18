@@ -1,4 +1,4 @@
-# /users/subuser routes
+# /users/subusers routes
 
 ### Create/Delete Subuser
 
