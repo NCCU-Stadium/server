@@ -59,7 +59,7 @@ router.post('/', jwtProtect, adminProtect, async (req, res) => {
   }
   return res.status(200).json({
     message: 'Success',
-    course_id: result.id,
+    courseId: result.id,
   })
 })
 
@@ -142,8 +142,8 @@ router.patch('/:course_id', jwtProtect, async (req, res) => {
   return res.status(200).json({ message: 'Update successfully.' })
 })
 
-router.delete('/:course_id', jwtProtect, adminProtect, async (req, res) => {
-  const courseId = req.params.course_id
+router.delete('/:courseId', jwtProtect, adminProtect, async (req, res) => {
+  const courseId = req.params.courseId
   const course = await getCourse(courseId as UUID)
   if ('error' in course) {
     return res.status(400).json({ message: course.error })

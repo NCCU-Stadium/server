@@ -33,7 +33,7 @@
 
 > | http code | content-type       | response                                                            |
 > | --------- | ------------------ | ------------------------------------------------------------------- |
-> | `200`     | `application/json` | `{"message": "Success", "course_id": "ObjectId of the new course"}` |
+> | `200`     | `application/json` | `{"message": "Success", "courseId": "ObjectId of the new course"}` |
 > | `401`     | `text/plain`       | `"No token provided"` or `TokenExpiredError` or ...                 |
 > | `403`     | `text/plain`       | `Invalid token`                                                     |
 > | `403`     | `application/json` | `{"message": "Not authorized to create courses"}`                   |
@@ -78,7 +78,7 @@
 </details>
 
 <details>
-<summary><code>DELETE</code> <code><b>/{course_id}</b></code> <code>(Delete a course by given id)</code></summary>
+<summary><code>DELETE</code> <code><b>/{courseId}</b></code> <code>(Delete a course by given id)</code></summary>
 
 <br />only for admin
 
@@ -92,7 +92,7 @@
 
 > | key       | required | data type | description      |
 > | --------- | -------- | --------- | ---------------- |
-> | course_id | true     | string    | id of the course |
+> | courseId | true     | string    | id of the course |
 
 ##### Responses
 
