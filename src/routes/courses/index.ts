@@ -1,95 +1,66 @@
 import { UUID } from 'crypto'
 import express from 'express'
-import { jwtProtect } from '../middleware'
-import { BodyVerificationError, checkBody, weekday2num } from './util'
-import { createCourse } from '../../database/courses/post'
+import { adminProtect, jwtProtect } from '../middleware'
+import { checkBody, weekday2num } from './util'
 import { createNewTable } from '../../database/table/post'
 import { createCourseUseTable } from '../../database/course_use_table/post'
 import { createCoachIs } from '../../database/coachIs/post'
 import { getCourse } from '../../database/courses/get'
 import { deleteCoachIs } from '../../database/coachIs/delete'
 import { deleteCourseUseTable } from '../../database/course_use_table/delete'
-import { deleteCourse } from '../../database/courses/delete'
-import { deleteTable } from '../../database/table/delete'
-import { getTablesFromCourseUseTable } from '../../database/course_use_table/get'
+import { deleteCourseSingleTransaction } from '../../database/courses/delete'
 import { patchCourse } from '../../database/courses/patch'
+import {
+  type NCSTProps,
+  type NewTableType,
+  createCourseSingleTransaction,
+} from '../../database/courses/post'
 
 const router = express.Router()
 
-router.post('/', jwtProtect, async (req, res) => {
-  if (req.body.decoded.role !== 'admin') {
-    return res.status(403).json({ message: 'Not authorized to create courses' })
+router.post('/', jwtProtect, adminProtect, async (req, res) => {
+  const body = checkBody(req.body, true)
+  if (weekday2num(body.weekday) !== body.startDay.getDay()) {
+    return res
+      .status(400)
+      .json({ message: 'startDay must be on the same weekday as weekday' })
   }
-  try {
-    const body = checkBody(req.body, true)
-    if (weekday2num(body.weekday) !== body.startDay.getDay()) {
-      return res
-        .status(400)
-        .json({ message: 'startDay must be on the same weekday as weekday' })
-    }
 
-    // 建立課程
-    const newCourse = await createCourse(body)
-
-    if ('error' in newCourse) {
-      console.error(newCourse.error)
-      return res.status(500).json({ message: newCourse.error })
-    }
-
-    // 建立使用桌子
-    Array.from({ length: body.weeks }).forEach((_, i) => {
-      const dateThisWeek = new Date(
-        body.startDay.getTime() + i * 7 * 24 * 60 * 60 * 1000
-      )
-      body.timeIdx.forEach((timeIdx) => {
-        body.usedTableId.forEach(async (usedTableId) => {
-          try {
-            await createNewTable({
-              timeIdx,
-              tableDate: dateThisWeek,
-              tableId: usedTableId,
-            })
-          } catch (e) {
-            return res.status(400).json({ message: 'Table already reserved' })
-          }
-          const newTableUse = await createCourseUseTable({
-            courseId: newCourse.id,
-            usedTableId,
-            tableDate: dateThisWeek,
-            timeIdx,
-          })
-          if ('error' in newTableUse) {
-            console.error(newTableUse.error)
-            return res.status(500).json({ message: newTableUse.error })
-          }
+  let newtable: NewTableType[] = []
+  Array.from({ length: body.weeks }).forEach((_, i) => {
+    const dateThisWeek = new Date(
+      body.startDay.getTime() + i * 7 * 24 * 60 * 60 * 1000
+    ).toLocaleDateString('fr-CA')
+    body.timeIdx.forEach((timeIdx) => {
+      body.usedTableId.forEach(async (usedTableId) => {
+        newtable.push({
+          timeIdx,
+          tableDate: dateThisWeek,
+          tableId: usedTableId,
         })
       })
     })
+  })
 
-    // 建立教練
-    body.coachEmail.forEach(async (coachEmail) => {
-      const newCoachIs = await createCoachIs({
-        courseId: newCourse.id,
-        userMail: coachEmail,
-      })
+  let coachIs: { userMail: string }[] = []
+  body.coachEmail.forEach(async (coachEmail) => {
+    coachIs.push({ userMail: coachEmail })
+  })
 
-      if ('error' in newCoachIs) {
-        console.error(newCoachIs.error)
-        return res.status(500).json({ message: newCoachIs.error })
-      }
-    })
-
-    return res.status(200).json({
-      message: 'Success',
-      course_id: newCourse.id,
-    })
-  } catch (e) {
-    if (e instanceof BodyVerificationError) {
-      return res.status(400).json({ message: e.message })
-    }
-    console.error(e)
-    return res.status(500).json({ message: 'Internal server error' })
+  const ncst: NCSTProps = {
+    newcourse: body,
+    newtable,
+    coachIs,
   }
+  const result = await createCourseSingleTransaction(ncst)
+  if ('error' in result) {
+    console.error(result.error)
+    return res.status(500).json({ message: result.error })
+  }
+  return res.status(200).json({
+    message: 'Success',
+    course_id: result.id,
+  })
 })
 
 router.patch('/:course_id', jwtProtect, async (req, res) => {
@@ -171,25 +142,16 @@ router.patch('/:course_id', jwtProtect, async (req, res) => {
   return res.status(200).json({ message: 'Update successfully.' })
 })
 
-router.delete('/:course_id', jwtProtect, async (req, res) => {
-  if (req.body.decoded.role !== 'admin') {
-    return res.status(403).json({ message: 'Not authorized to delete courses' })
-  }
+router.delete('/:course_id', jwtProtect, adminProtect, async (req, res) => {
   const courseId = req.params.course_id
   const course = await getCourse(courseId as UUID)
   if ('error' in course) {
     return res.status(400).json({ message: course.error })
   }
-  const tables = await getTablesFromCourseUseTable(courseId as UUID)
-
-  await Promise.all([
-    deleteCourseUseTable(courseId as UUID),
-    deleteCoachIs(courseId as UUID),
-  ])
-  await Promise.all([
-    ...tables.map((table) => deleteTable(table)),
-    deleteCourse(courseId as UUID),
-  ])
+  const result = await deleteCourseSingleTransaction(courseId as UUID)
+  if ('error' in result) {
+    return res.status(500).json({ message: result.error })
+  }
   return res.status(200).json({ message: 'Delete course successfully' })
 })
 

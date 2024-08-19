@@ -111,11 +111,11 @@ CREATE TABLE IF NOT EXISTS "user_reserve_table_t" (
 );
 
 CREATE TABLE IF NOT EXISTS "course_use_table_t" (
-  "courseid" uuid,
+  "course_id" uuid,
   "usedtableid" integer,
   "tabledate" date,
   "timeidx" integer,
-  PRIMARY KEY ("courseid", "usedtableid", "tabledate", "timeidx")
+  PRIMARY KEY ("course_id", "usedtableid", "tabledate", "timeidx")
 );
 
 -- purchasehis_t
@@ -148,7 +148,7 @@ ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("user_mail") REFERENCES "use
 ALTER TABLE "user_reserve_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", "timeidx") REFERENCES "table_t" ("tableid", "tabledate", "timeidx");
 
 -- course_use_table_t
-ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("courseid") REFERENCES "course_t" ("id");
+ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("course_id") REFERENCES "course_t" ("id");
 ALTER TABLE "course_use_table_t" ADD FOREIGN KEY ("usedtableid", "tabledate", "timeidx") REFERENCES "table_t" ("tableid", "tabledate", "timeidx");
 
 -- Activity table

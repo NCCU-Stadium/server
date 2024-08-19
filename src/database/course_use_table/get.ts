@@ -6,7 +6,7 @@ import { NewTableType } from '../table/post'
 export type ExistCourseUseTableType = NewCourseUseTableType
 
 export async function getCourseUseTables(courseId: UUID) {
-  const qstring = 'select * from "course_use_table_t" where courseid = $1'
+  const qstring = 'select * from "course_use_table_t" where course_id = $1'
   const res = await query(qstring, [courseId])
   return res.rows.map(
     (use) =>
@@ -25,7 +25,7 @@ export async function getTablesFromCourseUseTable(courseId: UUID) {
       u.usedtableid = t.tableid AND
       u.tabledate = t.tabledate AND
       u.timeidx = t.timeidx
-    WHERE u.courseid = $1`
+    WHERE u.course_id = $1`
   const res = await query(qstring, [courseId])
   return res.rows.map(
     (table) =>
