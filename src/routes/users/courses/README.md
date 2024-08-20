@@ -93,7 +93,7 @@
 </details>
 
 <details>
-<summary><code>GET</code> <code><b>/list/{username}</b></code> <code>(list all courses for the user)</code></summary>
+<summary><code>GET</code> <code><b>/list/{username}</b></code> <code>(list all courses for the subuser)</code></summary>
 
 ##### Headers
 

@@ -13,7 +13,7 @@ router.post('/:username', jwtProtect, async (req, res) => {
   const { username } = req.params
   const { mail } = req.body.decoded
   const { avatar, gender, birth } = req.body
-  if (!avatar || !gender || !birth) {
+  if (!gender || !birth) {
     return res.status(400).json('missing required fields')
   }
   // prettier-ignore
