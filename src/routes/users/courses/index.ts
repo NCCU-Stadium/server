@@ -63,14 +63,41 @@ router.get('/list', jwtProtect, async (req, res) => {
   res.status(200).json(result.arr)
 })
 
+/**
+ * GET /users/courses/list/:username
+ * Get user's courses by subuser name
+ */
+import { toSlot, isNone } from './util'
 router.get('/list/:username', jwtProtect, async (req, res) => {
   const mail = req.body.decoded.mail
   const username = req.params.username
   const result = await getUserCoursesBySubuser(mail, username)
-  if (result.error) {
-    return res.status(400).send(result.error)
-  }
-  res.status(200).json(result.res)
+  if (result.error) return res.status(500).send(result.error)
+  if (!result.res) return res.status(500).send('No courses found')
+
+  const localDate = (date: Date) => date.toLocaleDateString('fr-CA')
+
+  // Result preprocess
+  // console.log(result.res)
+  const data: {}[] = []
+  result.res.forEach((course) => {
+    data.push({
+      courseId: course.courseId,
+      leaveCount: !isNone(course.leaveCount) || 0,
+      weekday: course.weekDay,
+      timeSlot: course.timeSlot,
+      courseType: course.courseType,
+      title: course.title,
+      startDay: localDate(new Date(course.startDay)),
+      slot: toSlot(
+        course.timeIdx[0],
+        course.timeIdx[course.timeIdx.length - 1]
+      ),
+      content: course.content,
+      weeks: course.weeks,
+    })
+  })
+  res.status(200).json(data)
 })
 
 export default router

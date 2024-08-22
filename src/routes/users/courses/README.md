@@ -106,23 +106,21 @@
 ```typescript
 type Res = {
   courseId: string
-  leaveCout: string
-  timeSlot: string
-  weekDay: string
-  courseType: string
-  duration: number
+  leaveCount: number
+  weekday: 'Monday' | 'Tuesday' | ... | 'Sunday'
+  timeSlot: 'Morning' | 'Afternoon' | 'Night'
+  courseType: 'Group' | 'Private'
   title: string
-  weeks: number
+  startDay: string // yyyy-mm-dd
+  slot: string // e.g. '07:00 ~ 07:00'
   content: string
-  startDay: string
-  timeIdx: number[]
-  fee: number
+  weeks: number
 }
 ```
 
-> | http code | content-type       | response             |
-> | --------- | ------------------ | -------------------- |
-> | `200`     | `application/json` | `{Res}`              |
-> | `400`     | `text/plain`       | `No attended course` |
+> | http code | content-type       | response         |
+> | --------- | ------------------ | ---------------- |
+> | `200`     | `application/json` | `{Res[]}`        |
+> | `500`     | `text/plain`       | `Error messages` |
 
 </details>

@@ -186,7 +186,7 @@ export function weekday2num(weekday: string): number {
     case 'Saturday':
       return 6
     case 'Sunday':
-      return 7
+      return 0
     default:
       throw new Error('Invalid weekday')
   }

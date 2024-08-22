@@ -16,7 +16,7 @@ export async function getUserCourses(mail: string) {
 
 type GetCourseBySubuserResType = {
   courseId: string
-  leaveCout: string
+  leaveCount: string
   timeSlot: string
   weekDay: string
   courseType: string
@@ -52,7 +52,7 @@ export async function getUserCoursesBySubuser(
   res.rows.forEach((row) => {
     response.push({
       courseId: row.course_id,
-      leaveCout: row.leave_count,
+      leaveCount: row.leave_count,
       timeSlot: row.timeslot,
       weekDay: row.weekday,
       courseType: row.coursetype,
