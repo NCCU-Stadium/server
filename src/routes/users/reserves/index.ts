@@ -13,13 +13,11 @@ import { cancelReservation } from '../../../database/reserves/delete'
 
 const router = express.Router()
 router.get('/all', async (req, res) => {
-  const date = req.query.date as string
-  const tableid = req.query.tableid as string
-  const timeidx = req.query.timeidx as string
+  const { date, tableid, timeidx } = req.query
   const table: TableType = {
-    date: date,
-    tableid: tableid,
-    timeidx: timeidx,
+    date: date as string,
+    tableid: tableid as string,
+    timeidx: timeidx as string,
   }
   const result = await getReservations(table)
   if (result.error) {
@@ -39,15 +37,13 @@ router.get('/', jwtProtect, async (req, res) => {
 
 router.post('/', jwtProtect, async (req, res) => {
   const mail = req.body.decoded.mail
-  const date = req.body.date as string
-  const tableid = req.body.tableid as string
-  const timeidx = req.body.timeidx as string
+  const { date, tableid, timeidx } = req.query
 
   const reserve: ReservationType = {
     user_mail: mail,
-    usedtableid: tableid,
-    tabledate: date,
-    timeidx: timeidx,
+    usedtableid: tableid as string,
+    tabledate: date as string,
+    timeidx: timeidx as string,
   }
 
   const result = await newReservation(reserve)
@@ -59,19 +55,15 @@ router.post('/', jwtProtect, async (req, res) => {
 
 router.delete('/', jwtProtect, async (req, res) => {
   const mail = req.body.decoded.mail
-  const date = req.body.date as string
-  const tableid = req.body.tableid as string
-  const timeidx = req.body.timeidx as string
+  const { date, tableid, timeidx } = req.query
 
   const reserve: ReservationType = {
     user_mail: mail,
-    usedtableid: tableid,
-    tabledate: date,
-    timeidx: timeidx,
+    usedtableid: tableid as string,
+    tabledate: date as string,
+    timeidx: timeidx as string,
   }
 
-  // const mail = req.params.mail
-  // console.log(req.params.mail)
   const result = await cancelReservation(reserve)
   if (result.error) {
     return res.status(400).send(result.error)

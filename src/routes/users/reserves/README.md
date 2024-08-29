@@ -40,6 +40,8 @@ e.g.
 > | `200`     | `application/json` | `Reservation[]` |
 > | `400`     | `text/plain`       | `error message` |
 
+`Reservation[]` could be an empty array.
+
 </details>
 
 <details>

@@ -6,16 +6,10 @@ export type TableType = {
   timeidx?: string
 }
 export async function getReservations(table: TableType) {
-  // 初始查询字符串
   let qstring = 'SELECT * FROM table_t WHERE tabledate = $1'
-
-  // 用于存储查询参数的数组，初始化时已经包含了 table.date
-  const params: string[] = [table.date]
-
-  // 用于构建查询条件的数组
+  const params: string[] = [table.date] // Initialized condition array with date
   const conditions: string[] = []
 
-  // 根据不同条件添加查询条件和参数
   if (table.tableid) {
     conditions.push(`tableid = $${params.length + 1}`)
     params.push(table.tableid)
@@ -25,18 +19,20 @@ export async function getReservations(table: TableType) {
     params.push(table.timeidx)
   }
 
-  // 如果有额外的查询条件，添加到查询字符串中
+  // Concatenate conditions
   if (conditions.length > 0) {
     qstring += ' AND ' + conditions.join(' AND ')
   }
 
-  console.log('Query String:', qstring)
-  console.log('Params:', params)
+  let res
+  try {
+    res = await query(qstring, params)
+  } catch (err) {
+    return { error: 'query error' }
+  }
 
-  // 执行查询
-  const res = await query(qstring, params)
   if (res.rowCount === 0) {
-    return { error: 'no reservations in the given period' }
+    return { arr: [] }
   }
   return { arr: res.rows }
 }
